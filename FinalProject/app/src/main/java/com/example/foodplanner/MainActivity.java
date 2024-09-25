@@ -1,65 +1,80 @@
 package com.example.foodplanner;
 
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.example.foodplanner.RandomMealFeature.Model.RandomMealPojo;
-import com.example.foodplanner.RandomMealFeature.Presenter.RandomMealPresenter;
-import com.example.foodplanner.RandomMealFeature.View.RandomMealViewInterface;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
-import java.util.List;
+import com.example.foodplanner.RandomMealFeature.View.RandomMealFragment;
+import com.example.foodplanner.SearchMealFeature.View.SearchMealFragment; // Ensure you have this
+import com.example.foodplanner.FavoritesFeature.View.FavoritesFragment; // Ensure you have this
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class MainActivity extends AppCompatActivity implements RandomMealViewInterface {
+public class MainActivity extends AppCompatActivity {
 
-    private RandomMealPresenter presenter;
-    private TextView mealNameTextView;
-    private TextView mealInstructionsTextView;
-    private ImageView mealImageView;
+    private ImageView gifImageView; // Declare the ImageView for the GIF
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_random_meal);
+        setContentView(R.layout.activity_main);
 
-        // Initialize UI components
-        mealNameTextView = findViewById(R.id.mealNameTextView);
-        mealInstructionsTextView = findViewById(R.id.mealInstructionsTextView);
-        mealImageView = findViewById(R.id.mealImageView);
+        gifImageView = findViewById(R.id.gifImageID); // Initialize the ImageView
 
-        // Initialize the presenter
-        presenter = new RandomMealPresenter(this);
+        // Initially show the GIF
+        gifImageView.setVisibility(View.VISIBLE);
 
-        // Fetch the random meal data
-        presenter.fetchRandomMeal();
+        // Bottom navigation setup
+        BottomNavigationView bottomNav = findViewById(R.id.bottomNavigationID); // Ensure this ID matches your layout
+        bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Fragment selectedFragment = null;
+
+                if (item.getItemId() == R.id.nav_homeID) {
+                    // Hide all fragments and show the GIF when Home is clicked
+                    hideAllFragments();
+                    gifImageView.setVisibility(View.VISIBLE);
+                    return true; // No fragment to load for Home
+                } else if (item.getItemId() == R.id.nav_random_mealID) {
+                    selectedFragment = new RandomMealFragment();
+                    gifImageView.setVisibility(View.GONE); // Hide the GIF when "Random Meal" is clicked
+                } else if (item.getItemId() == R.id.nav_search_mealID) {
+                    selectedFragment = new SearchMealFragment(); // Uncomment and use this when ready
+                    gifImageView.setVisibility(View.GONE); // Hide the GIF for this fragment
+                } else if (item.getItemId() == R.id.nav_favoritesID) {
+                    selectedFragment = new FavoritesFragment(); // Uncomment and use this when ready
+                    gifImageView.setVisibility(View.GONE); // Hide the GIF for this fragment
+                }
+
+                // Load the selected fragment if one is selected
+                return loadFragment(selectedFragment);
+            }
+        });
     }
 
-    @Override
-    public void displayRandomMeal(List<RandomMealPojo> mealList) {
-        if (mealList != null && !mealList.isEmpty()) {
-            // Assuming we get a single meal in the list
-            RandomMealPojo meal = mealList.get(0);
-
-            mealNameTextView.setText(meal.strMeal);
-            mealInstructionsTextView.setText(meal.strInstructions);
-
-            // Use Glide or Picasso to load the image
-            Glide.with(this).load(meal.strMealThumb).into(mealImageView);
-        } else {
-            Log.i("RandomMealActivity : ", "Meal list is empty or null");
-            displayError("No meals available");
+    private boolean loadFragment(Fragment fragment) {
+        // Load the selected fragment into the fragment container
+        if (fragment != null) {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragmentContainerID, fragment) // Ensure this ID matches your layout
+                    .commit();
+            return true;
         }
+        return false;
     }
 
-
-    @Override
-    public void displayError(String errorMessage) {
-        Log.e("RandomMealActivity", "Error: " + errorMessage);
-        Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show();
-
+    private void hideAllFragments() {
+        // Hide all fragments in the fragment manager
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        for (Fragment fragment : getSupportFragmentManager().getFragments()) {
+            transaction.hide(fragment);
+        }
+        transaction.commit();
     }
 }
