@@ -1,4 +1,4 @@
-package com.example.foodplanner;
+package com.example.foodplanner.RandomMealFeature.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,13 +8,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.foodplanner.R;
 import com.example.foodplanner.RandomMealFeature.Model.RandomMealPojo;
 import com.example.foodplanner.RandomMealFeature.Presenter.RandomMealPresenter;
 import com.example.foodplanner.RandomMealFeature.View.RandomMealViewInterface;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements RandomMealViewInterface {
+public class RandomMealActivityView extends AppCompatActivity implements RandomMealViewInterface {
 
     private RandomMealPresenter presenter;
     private TextView mealNameTextView;
@@ -50,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements RandomMealViewInt
             // Use Glide or Picasso to load the image
             Glide.with(this).load(meal.strMealThumb).into(mealImageView);
         } else {
-            Log.i("RandomMealActivity : ", "Meal list is empty or null");
+            Log.i("RandomMealActivity", "Meal list is empty or null");
             displayError("No meals available");
         }
     }
