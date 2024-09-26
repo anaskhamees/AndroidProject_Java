@@ -3,13 +3,16 @@ package com.example.foodplanner;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.foodplanner.RandomMealFeature.View.RandomMealFragment;
 import com.example.foodplanner.SearchMealFeature.View.SearchMealFragment; // Ensure you have this
 import com.example.foodplanner.FavoritesFeature.View.FavoritesFragment; // Ensure you have this
@@ -17,17 +20,24 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ImageView gifImageView; // Declare the ImageView for the GIF
+    // Declare the LottieAnimationView for the animation
+    private LottieAnimationView lottieAnimationView;
+    Animation animation; // To use custom animation if needed
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        gifImageView = findViewById(R.id.gifImageID); // Initialize the ImageView
+        // Initialize the LottieAnimationView
+        lottieAnimationView = findViewById(R.id.lottieAnimationView);
 
-        // Initially show the GIF
-        gifImageView.setVisibility(View.VISIBLE);
+        // Initially show the Lottie animation
+        lottieAnimationView.setVisibility(View.VISIBLE);
+
+        // Optional: Load a custom animation (you can skip this if not needed)
+       // animation = AnimationUtils.loadAnimation(this, R.anim.anima);
+        //lottieAnimationView.startAnimation(animation);
 
         // Bottom navigation setup
         BottomNavigationView bottomNav = findViewById(R.id.bottomNavigationID); // Ensure this ID matches your layout
@@ -37,19 +47,26 @@ public class MainActivity extends AppCompatActivity {
                 Fragment selectedFragment = null;
 
                 if (item.getItemId() == R.id.nav_homeID) {
-                    // Hide all fragments and show the GIF when Home is clicked
+                    // Hide all fragments and show the Lottie animation when Home is clicked
                     hideAllFragments();
-                    gifImageView.setVisibility(View.VISIBLE);
+                    lottieAnimationView.setVisibility(View.VISIBLE);
+                    lottieAnimationView.playAnimation(); // Play the Lottie animation
                     return true; // No fragment to load for Home
                 } else if (item.getItemId() == R.id.nav_random_mealID) {
                     selectedFragment = new RandomMealFragment();
-                    gifImageView.setVisibility(View.GONE); // Hide the GIF when "Random Meal" is clicked
+                    lottieAnimationView.setVisibility(View.GONE); // Hide the Lottie animation when "Random Meal" is clicked
                 } else if (item.getItemId() == R.id.nav_search_mealID) {
                     selectedFragment = new SearchMealFragment(); // Uncomment and use this when ready
-                    gifImageView.setVisibility(View.GONE); // Hide the GIF for this fragment
+                    lottieAnimationView.setVisibility(View.GONE); // Hide the Lottie animation for this fragment
+                    Toast.makeText(MainActivity.this, "Search for Meals", Toast.LENGTH_LONG).show();
                 } else if (item.getItemId() == R.id.nav_favoritesID) {
                     selectedFragment = new FavoritesFragment(); // Uncomment and use this when ready
-                    gifImageView.setVisibility(View.GONE); // Hide the GIF for this fragment
+                    Toast.makeText(MainActivity.this, "Favorite Meals ", Toast.LENGTH_LONG).show();
+                    lottieAnimationView.setVisibility(View.GONE); // Hide the Lottie animation for this fragment
+                } else if (item.getItemId() == R.id.nav_categoryID) {
+                    Toast.makeText(MainActivity.this, "Meals Category", Toast.LENGTH_LONG).show();
+                    selectedFragment = new Fragment(); // Uncomment and use this when ready
+                    lottieAnimationView.setVisibility(View.GONE); // Hide the Lottie animation for this fragment
                 }
 
                 // Load the selected fragment if one is selected

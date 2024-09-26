@@ -36,8 +36,8 @@
             <!-- CardView with rounded image -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/mealCardView"
-                android:layout_width="250dp"
-                android:layout_height="250dp"
+                android:layout_width="350dp"
+                android:layout_height="232dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="8dp"
                 app:cardCornerRadius="12dp"
@@ -46,11 +46,11 @@
                 <!-- ShapeableImageView for rounded corners -->
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/mealImageView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
+                    android:layout_width="334dp"
+                    android:layout_height="221dp"
                     android:contentDescription="@string/meal_image"
-                    app:shapeAppearanceOverlay="@style/RoundedImageStyle"/>
+                    android:scaleType="centerCrop"
+                    app:shapeAppearanceOverlay="@style/RoundedImageStyle" />
             </androidx.cardview.widget.CardView>
 
             <!-- Meal Instructions TextView -->

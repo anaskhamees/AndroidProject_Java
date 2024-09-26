@@ -42,12 +42,12 @@ dependencies {
     androidTestImplementation(libs.espresso.core)
 
     // For animation
-    implementation ("com.airbnb.android:lottie:6.1.0")
-    implementation ("pl.droidsonroids.gif:android-gif-drawable:1.2.22")
-    implementation ("com.airbnb.android:lottie:latest_version")
-    implementation ("com.google.firebase:firebase-firestore:25.1.0")
-    implementation ("androidx.navigation:navigation-ui-ktx:2.8.1")
-    implementation ("androidx.navigation:navigation-fragment-ktx:2.8.1")
+    implementation (libs.lottie)
+    implementation (libs.android.gif.drawable)
+    implementation (libs.lottie.vlatestversion)
+    implementation (libs.firebase.firestore)
+    implementation (libs.navigation.ui.ktx)
+    implementation (libs.navigation.fragment.ktx)
 
    //youtube media player
 

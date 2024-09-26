@@ -12,13 +12,17 @@
         android:layout_above="@id/bottomNavigationID"
         android:visibility="visible" />
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lottieAnimationView"
+        android:layout_width="444dp"
+        android:layout_height="493dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/animation" />
     <!-- ImageView for GIF Animation -->
-    <ImageView
-        android:id="@+id/gifImageID"
-        android:layout_width="match_parent"
-        android:layout_height="664dp"
-        android:src="@drawable/food"
-        android:visibility="visible" />
 
     <!-- BottomNavigationView for fragment navigation -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
