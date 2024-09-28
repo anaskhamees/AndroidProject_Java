@@ -1,6 +1,4 @@
-package com.example.foodplanner.RandomMealFeature.NetworkPkg;
-
-import com.example.foodplanner.RandomMealFeature.Model.RandomMealPojo;
+package com.example.foodplanner.RandomMealFeature.Model;
 
 import java.util.List;
 

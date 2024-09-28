@@ -6,28 +6,34 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.VideoView;
-import android.widget.MediaController;
+
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import com.bumptech.glide.Glide;
 import com.example.foodplanner.R;
 import com.example.foodplanner.RandomMealFeature.Model.RandomMealPojo;
+import com.example.foodplanner.Repository.MealRepository;
+import com.example.foodplanner.NetworkPkg.MealRemoteDataSource;
 import com.example.foodplanner.RandomMealFeature.Presenter.RandomMealPresenter;
 
 import java.util.List;
 
 public class RandomMealFragment extends Fragment implements RandomMealViewInterface {
 
-    private RandomMealPresenter presenter;
+    private RandomMealPresenter randomMealPresenter;
     private TextView mealNameTextView;
     private TextView mealInstructionsTextView;
     private ImageView mealImageView;
-    private VideoView videoView;
+    private WebView videoWebView;
+    private Button addToFavoritesButton; // Add this for favorite button
 
     @SuppressLint("MissingInflatedId")
     @Nullable
@@ -40,12 +46,26 @@ public class RandomMealFragment extends Fragment implements RandomMealViewInterf
         mealNameTextView = view.findViewById(R.id.mealNameTextView);
         mealInstructionsTextView = view.findViewById(R.id.mealInstructionsTextView);
         mealImageView = view.findViewById(R.id.mealImageView);
-        videoView=view.findViewById(R.id.mealVideoID);
-        // Initialize the presenter
-        presenter = new RandomMealPresenter(this);
+        videoWebView = view.findViewById(R.id.mealVideoWebView);
+        addToFavoritesButton = view.findViewById(R.id.addToFavoritesButton); // Initialize the button
 
-        // Fetch the random meal data
-        presenter.fetchRandomMeal();
+        // Initialize the presenter
+        randomMealPresenter = new RandomMealPresenter(this, MealRepository.getInstance(MealRemoteDataSource.getMealRemoteDataSourceInstance()));
+
+        // Configure WebView settings
+        WebSettings webSettings = videoWebView.getSettings();
+        webSettings.setJavaScriptEnabled(true);  // Enable JavaScript for YouTube video playback
+        videoWebView.setWebViewClient(new WebViewClient());  // Ensure the video opens within the WebView
+
+        // get the random meal data
+        randomMealPresenter.getRandomMeal();
+
+        // Handle Add to Favorite button click
+        addToFavoritesButton.setOnClickListener(v -> {
+            // Assuming mealNameTextView contains the current meal name or you can pass meal directly
+            String mealName = mealNameTextView.getText().toString();
+            addMealToFavorites(mealName);
+        });
 
         return view;
     }
@@ -53,37 +73,37 @@ public class RandomMealFragment extends Fragment implements RandomMealViewInterf
     @Override
     public void displayRandomMeal(List<RandomMealPojo> mealList) {
         if (mealList != null && !mealList.isEmpty()) {
-            // Assuming we get a single meal in the list
             RandomMealPojo meal = mealList.get(0);
 
             mealNameTextView.setText(meal.strMeal);
             mealInstructionsTextView.setText(meal.strInstructions);
-
-            // Use Glide or Picasso to load the image
             Glide.with(requireContext()).load(meal.strMealThumb).into(mealImageView);
 
-            // Check if a YouTube video URL is provided and play the video
+            // Check if a YouTube video URL is provided and display it in WebView
             if (meal.strYoutube != null && !meal.strYoutube.isEmpty()) {
-                videoView.setVisibility(View.VISIBLE);
+                videoWebView.setVisibility(View.VISIBLE);
 
-                // Extract the video ID from the YouTube URL
-                String videoUrl = meal.strYoutube;
-                // Load the YouTube video in a VideoView or Intent
-                videoView.setVideoPath(videoUrl);
-                videoView.start();
+                // Load the YouTube video
+                String videoUrl = meal.strYoutube.replace("watch?v=", "embed/");
+                String iframe = "<iframe width=\"100%\" height=\"100%\" src=\"" + videoUrl + "\" frameborder=\"0\" allowfullscreen></iframe>";
+                videoWebView.loadData(iframe, "text/html", "utf-8");
 
-                // Optionally, handle playback controls if needed
-                videoView.setOnCompletionListener(mp -> {
-                    // Logic for completion of video playback
-                });
             } else {
-                videoView.setVisibility(View.GONE);
-                Log.i("Video  : ", "displayRandomMeal: Video Not Work  ");
+                videoWebView.setVisibility(View.GONE);
+                Log.i("Video", "displayRandomMeal: No Video Available");
             }
+            // You could pass the meal object for favorites functionality
+            addToFavoritesButton.setOnClickListener(v -> addMealToFavorites(meal.strMeal));
         } else {
             Log.i("RandomMealFragment", "Meal list is empty or null");
             displayError("No meals available");
         }
+    }
+
+    // Handle Add to Favorites logic
+    private void addMealToFavorites(String mealName) {
+        // Add your logic to store this meal to favorites (e.g., in a database or shared preferences)
+        Toast.makeText(getContext(), mealName + " added to Favorites!", Toast.LENGTH_SHORT).show();
     }
 
     @Override

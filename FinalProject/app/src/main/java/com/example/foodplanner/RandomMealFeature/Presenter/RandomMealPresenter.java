@@ -1,36 +1,37 @@
 package com.example.foodplanner.RandomMealFeature.Presenter;
 
 
-import android.widget.Toast;
-
 import com.example.foodplanner.RandomMealFeature.Model.RandomMealPojo;
-import com.example.foodplanner.RandomMealFeature.NetworkPkg.RandomMealNetworkCallBackInterface;
-import com.example.foodplanner.RandomMealFeature.NetworkPkg.RandomMealRemoteDataSource;
+import com.example.foodplanner.Repository.MealRepository;
+import com.example.foodplanner.NetworkPkg.NetworkCallBackInterface;
 import com.example.foodplanner.RandomMealFeature.View.RandomMealViewInterface;
 
 import java.util.List;
 
-public class RandomMealPresenter {
+public class RandomMealPresenter implements RandomMealPresenterInterface, NetworkCallBackInterface<RandomMealPojo> {
     private RandomMealViewInterface randomMealIview;
-    private RandomMealRemoteDataSource randomMealRemoteDataSource;
+    private MealRepository randomMealRepo;
 
-    public RandomMealPresenter(RandomMealViewInterface view) {
-        this.randomMealIview = view;
-        this.randomMealRemoteDataSource = RandomMealRemoteDataSource.getRandomMealRemoteDataSourceInstance();
+    public RandomMealPresenter(RandomMealViewInterface Iview, MealRepository randomMealRepo) {
+        this.randomMealIview = Iview;
+        this.randomMealRepo=randomMealRepo;
+        //this.randomMealRemoteDataSource = RandomMealRemoteDataSource.getRandomMealRemoteDataSourceInstance();
     }
 
-    public void fetchRandomMeal() {
-        randomMealRemoteDataSource.makeRandomMealNetworkCall(new RandomMealNetworkCallBackInterface() {
-            @Override
-            public void onSuccessfulResult(List<RandomMealPojo> randomMeal) {
-                randomMealIview.displayRandomMeal(randomMeal);
-            }
+    public void getRandomMeal() {
 
-            @Override
-            public void onFailureResult(String errMsg) {
-                randomMealIview.displayError(errMsg);
-
-            }
-        });
+        randomMealRepo.fetchRandomMeal(this);
     }
+    @Override
+    public void onSuccessfulResult(List<RandomMealPojo> randomMeal) {
+        randomMealIview.displayRandomMeal(randomMeal);
+    }
+
+    @Override
+    public void onFailureResult(String errMsg) {
+        randomMealIview.displayError(errMsg);
+
+    }
+
+
 }
