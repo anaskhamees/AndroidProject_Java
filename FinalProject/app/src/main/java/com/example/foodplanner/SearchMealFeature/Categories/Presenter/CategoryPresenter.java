@@ -1,23 +1,35 @@
 package com.example.foodplanner.SearchMealFeature.Categories.Presenter;
 
 import com.example.foodplanner.NetworkPkg.NetworkCallBackInterface;
+import com.example.foodplanner.Repository.MealRepository;
 import com.example.foodplanner.SearchMealFeature.Categories.Model.CategoryPojo;
+import com.example.foodplanner.SearchMealFeature.Categories.View.CategoriesViewInterface;
 
 import java.util.List;
 
 public class CategoryPresenter implements CategoryPresenterInterface, NetworkCallBackInterface<CategoryPojo> {
-    @Override
-    public void getCategories() {
 
+    private CategoriesViewInterface categoriesIview;
+    private MealRepository categoriesRepo;
+
+    public CategoryPresenter(CategoriesViewInterface categoriesIview,MealRepository categoriesRepo) {
+        this.categoriesIview = categoriesIview;
+        this.categoriesRepo=categoriesRepo;
     }
 
     @Override
-    public void onSuccessfulResult(List<CategoryPojo> randomMeal) {
-        
+    public void getCategories() {
+
+        categoriesRepo.fetchCategories(this);
+    }
+
+    @Override
+    public void onSuccessfulResult(List<CategoryPojo> categories) {
+        categoriesIview.displayCategories(categories);
     }
 
     @Override
     public void onFailureResult(String errMsg) {
-
+        categoriesIview.displayError(errMsg);
     }
 }
