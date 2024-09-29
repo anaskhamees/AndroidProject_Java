@@ -1,4 +1,4 @@
-package com.example.foodplanner.SearchMealFeature.Categories.Presenter;
+package com.example.foodplanner.Home.Categories.Presenter;
 
 public interface CategoryPresenterInterface {
     void getCategories();

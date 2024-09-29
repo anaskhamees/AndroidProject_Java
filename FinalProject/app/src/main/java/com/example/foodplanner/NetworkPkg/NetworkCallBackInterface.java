@@ -1,7 +1,5 @@
 package com.example.foodplanner.NetworkPkg;
 
-import com.example.foodplanner.RandomMealFeature.Model.RandomMealPojo;
-
 import java.util.List;
 
 public interface NetworkCallBackInterface <T>{

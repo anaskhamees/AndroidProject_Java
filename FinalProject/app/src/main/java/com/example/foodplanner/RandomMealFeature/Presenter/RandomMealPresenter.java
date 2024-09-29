@@ -1,14 +1,14 @@
 package com.example.foodplanner.RandomMealFeature.Presenter;
 
 
-import com.example.foodplanner.RandomMealFeature.Model.RandomMealPojo;
+import com.example.foodplanner.Model.MealPojo;
 import com.example.foodplanner.Repository.MealRepository;
 import com.example.foodplanner.NetworkPkg.NetworkCallBackInterface;
 import com.example.foodplanner.RandomMealFeature.View.RandomMealViewInterface;
 
 import java.util.List;
 
-public class RandomMealPresenter implements RandomMealPresenterInterface, NetworkCallBackInterface<RandomMealPojo> {
+public class RandomMealPresenter implements RandomMealPresenterInterface, NetworkCallBackInterface<MealPojo> {
     private RandomMealViewInterface randomMealIview;
     private MealRepository randomMealRepo;
 
@@ -23,7 +23,7 @@ public class RandomMealPresenter implements RandomMealPresenterInterface, Networ
         randomMealRepo.fetchRandomMeal(this);
     }
     @Override
-    public void onSuccessfulResult(List<RandomMealPojo> randomMeal) {
+    public void onSuccessfulResult(List<MealPojo> randomMeal) {
         randomMealIview.displayRandomMeal(randomMeal);
     }
 

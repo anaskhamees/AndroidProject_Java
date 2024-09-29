@@ -19,7 +19,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import com.bumptech.glide.Glide;
 import com.example.foodplanner.R;
-import com.example.foodplanner.RandomMealFeature.Model.RandomMealPojo;
+import com.example.foodplanner.Model.MealPojo;
 import com.example.foodplanner.Repository.MealRepository;
 import com.example.foodplanner.NetworkPkg.MealRemoteDataSource;
 import com.example.foodplanner.RandomMealFeature.Presenter.RandomMealPresenter;
@@ -71,9 +71,9 @@ public class RandomMealFragment extends Fragment implements RandomMealViewInterf
     }
 
     @Override
-    public void displayRandomMeal(List<RandomMealPojo> mealList) {
+    public void displayRandomMeal(List<MealPojo> mealList) {
         if (mealList != null && !mealList.isEmpty()) {
-            RandomMealPojo meal = mealList.get(0);
+            MealPojo meal = mealList.get(0);
 
             mealNameTextView.setText(meal.strMeal);
             mealInstructionsTextView.setText(meal.strInstructions);

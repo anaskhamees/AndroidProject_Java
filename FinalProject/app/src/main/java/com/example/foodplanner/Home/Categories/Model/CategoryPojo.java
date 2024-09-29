@@ -1,4 +1,4 @@
-package com.example.foodplanner.SearchMealFeature.Categories.Model;
+package com.example.foodplanner.Home.Categories.Model;
 
 public class CategoryPojo {
 

@@ -1,9 +1,9 @@
-package com.example.foodplanner.SearchMealFeature.Categories.Presenter;
+package com.example.foodplanner.Home.Categories.Presenter;
 
 import com.example.foodplanner.NetworkPkg.NetworkCallBackInterface;
 import com.example.foodplanner.Repository.MealRepository;
-import com.example.foodplanner.SearchMealFeature.Categories.Model.CategoryPojo;
-import com.example.foodplanner.SearchMealFeature.Categories.View.CategoriesViewInterface;
+import com.example.foodplanner.Home.Categories.Model.CategoryPojo;
+import com.example.foodplanner.Home.Categories.View.CategoriesViewInterface;
 
 import java.util.List;
 

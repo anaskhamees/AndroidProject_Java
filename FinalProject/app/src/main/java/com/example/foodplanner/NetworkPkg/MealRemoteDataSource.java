@@ -2,10 +2,10 @@ package com.example.foodplanner.NetworkPkg;
 
 import android.util.Log;
 
-import com.example.foodplanner.RandomMealFeature.Model.RandomMealPojo;
-import com.example.foodplanner.RandomMealFeature.Model.RandomMealResponse;
-import com.example.foodplanner.SearchMealFeature.Categories.Model.CategoryPojo;
-import com.example.foodplanner.SearchMealFeature.Categories.Model.CategoryResponse;
+import com.example.foodplanner.Model.MealPojo;
+import com.example.foodplanner.Model.MealResponse;
+import com.example.foodplanner.Home.Categories.Model.CategoryPojo;
+import com.example.foodplanner.Home.Categories.Model.CategoryResponse;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -34,16 +34,16 @@ public class MealRemoteDataSource {
         return mealRemoteSource;
     }
 
-    public void makeRandomMealNetworkCall(NetworkCallBackInterface<RandomMealPojo> randomMealCallBack )
+    public void makeRandomMealNetworkCall(NetworkCallBackInterface<MealPojo> randomMealCallBack )
     {
-        Call<RandomMealResponse> randomMealCall= mealAPI.getRandomMealResponse();
-        randomMealCall.enqueue(new Callback<RandomMealResponse>() {
+        Call<MealResponse> randomMealCall= mealAPI.getRandomMealResponse();
+        randomMealCall.enqueue(new Callback<MealResponse>() {
             @Override
-            public void onResponse(Call<RandomMealResponse> call, Response<RandomMealResponse> response) {
+            public void onResponse(Call<MealResponse> call, Response<MealResponse> response) {
                 if (response.isSuccessful()) {
                     Log.d("API Response Successful: ", "Response: " + response.body());
                     Log.i(TAG, "onResponse: Random Meal Successful "+response.body());
-                    randomMealCallBack.onSuccessfulResult(response.body().getRandomMealResponse());
+                    randomMealCallBack.onSuccessfulResult(response.body().getMealResponse());
 
                 } else {
                     Log.e("API Error", "Error code: " + response.code());
@@ -53,7 +53,7 @@ public class MealRemoteDataSource {
 
 
             @Override
-            public void onFailure(Call<RandomMealResponse> call, Throwable t) {
+            public void onFailure(Call<MealResponse> call, Throwable t) {
 
                 randomMealCallBack.onFailureResult(t.getMessage());
                 t.printStackTrace();
@@ -92,5 +92,34 @@ public class MealRemoteDataSource {
         });
     }
 
+    public void makeMealFilteredByCategoryNetworkCall(NetworkCallBackInterface<MealPojo> MealCallBack ,String category)
+    {
+        Call<MealResponse> MealFilteredByCategoryCall= mealAPI.getMealFilteredByCategory(category);
+        MealFilteredByCategoryCall.enqueue(new Callback<MealResponse>() {
+            @Override
+            public void onResponse(Call<MealResponse> call, Response<MealResponse> response) {
+                if (response.isSuccessful()) {
+                    Log.d("API Response Successful: ", "Response: " + response.body());
+                    Log.i(TAG, "onResponse: Random Meal Successful "+response.body());
+                    MealCallBack.onSuccessfulResult(response.body().getMealResponse());
+
+                } else {
+                    Log.e("API Error", "Error code: " + response.code());
+                }
+            }
+
+
+
+            @Override
+            public void onFailure(Call<MealResponse> call, Throwable t) {
+
+                MealCallBack.onFailureResult(t.getMessage());
+                t.printStackTrace();
+                Log.i(TAG, "onFailure: Failed to Fetch data from API Server");
+                Log.e("API Error", "Error: " + t.getMessage());
+
+            }
+        });
+    }
 
 }

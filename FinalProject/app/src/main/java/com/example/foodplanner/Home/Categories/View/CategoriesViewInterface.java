@@ -1,6 +1,6 @@
-package com.example.foodplanner.SearchMealFeature.Categories.View;
+package com.example.foodplanner.Home.Categories.View;
 
-import com.example.foodplanner.SearchMealFeature.Categories.Model.CategoryPojo;
+import com.example.foodplanner.Home.Categories.Model.CategoryPojo;
 
 import java.util.List;
 

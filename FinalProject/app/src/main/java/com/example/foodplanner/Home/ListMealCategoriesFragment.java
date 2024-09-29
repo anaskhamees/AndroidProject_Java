@@ -1,4 +1,4 @@
-package com.example.foodplanner.SearchMealFeature;
+package com.example.foodplanner.Home;
 
 import androidx.fragment.app.Fragment;
 import android.os.Bundle;
@@ -12,9 +12,9 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.foodplanner.R;
-import com.example.foodplanner.SearchMealFeature.Categories.View.CategoriesFragment;  // Import your CategoriesFragment
+import com.example.foodplanner.Home.Categories.View.CategoriesFragment;  // Import your CategoriesFragment
 
-public class SearchMealFragment extends Fragment {
+public class ListMealCategoriesFragment extends Fragment {
 
     @Nullable
     @Override

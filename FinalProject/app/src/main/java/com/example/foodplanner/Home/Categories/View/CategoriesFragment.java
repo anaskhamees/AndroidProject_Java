@@ -1,4 +1,4 @@
-package com.example.foodplanner.SearchMealFeature.Categories.View;
+package com.example.foodplanner.Home.Categories.View;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,8 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.foodplanner.NetworkPkg.MealRemoteDataSource;
 import com.example.foodplanner.R;
 import com.example.foodplanner.Repository.MealRepository;
-import com.example.foodplanner.SearchMealFeature.Categories.Model.CategoryPojo;
-import com.example.foodplanner.SearchMealFeature.Categories.Presenter.CategoryPresenter;
+import com.example.foodplanner.Home.Categories.Model.CategoryPojo;
+import com.example.foodplanner.Home.Categories.Presenter.CategoryPresenter;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -33,4 +33,9 @@ public class MealRepository implements RepositoryInterface {
     public void fetchCategories(NetworkCallBackInterface networkCallBackInterface) {
         mealRemoteDataSource.makeCategoryNetworkCall(networkCallBackInterface);
     }
+
+    @Override
+    public void fetchMealFilteredByCategory(NetworkCallBackInterface networkCallBackInterface, String category) {
+        mealRemoteDataSource.makeMealFilteredByCategoryNetworkCall(networkCallBackInterface,category);
+    }
 }

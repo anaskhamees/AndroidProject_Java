@@ -1,6 +1,4 @@
-package com.example.foodplanner.SearchMealFeature.Categories.Model;
-
-import com.example.foodplanner.RandomMealFeature.Model.RandomMealPojo;
+package com.example.foodplanner.Home.Categories.Model;
 
 import java.util.List;
 
