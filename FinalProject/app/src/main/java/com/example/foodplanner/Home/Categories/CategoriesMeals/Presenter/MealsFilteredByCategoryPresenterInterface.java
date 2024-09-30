@@ -1,5 +1,5 @@
 package com.example.foodplanner.Home.Categories.CategoriesMeals.Presenter;
 
 public interface MealsFilteredByCategoryPresenterInterface {
-    public void getMealsFilteredByCategory();
+    public void getMealsFilteredByCategory(String category);
 }

@@ -1,6 +1,7 @@
 package com.example.foodplanner.Home.Categories.View;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,11 +10,13 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.foodplanner.R;
 import com.example.foodplanner.Home.Categories.Model.CategoryPojo;
+import com.example.foodplanner.R;
+import com.example.foodplanner.Home.Categories.CategoriesMeals.View.CategoriesMealsFragment;
 
 import java.util.List;
 
@@ -44,13 +47,29 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
 
         // Bind data to the ViewHolder views
         holder.categoryName.setText(category.getStrCategory());
-        holder.categoryDescription.setText(category.getStrCategoryDescription());
 
         // Load image using Glide library
         Glide.with(context)
                 .load(category.getStrCategoryThumb()) // Load image from URL
                 .placeholder(R.drawable.loading) // Placeholder while loading
                 .into(holder.categoryImage);
+
+        // Handle click event to pass category name and replace fragment
+        holder.itemView.setOnClickListener(v -> {
+            // Create a new instance of CategoriesMealsFragment
+            CategoriesMealsFragment fragment = new CategoriesMealsFragment();
+
+            // Create a bundle to pass the selected category to the new fragment
+            Bundle bundle = new Bundle();
+            bundle.putString("CATEGORY_NAME", category.getStrCategory()); // Pass the selected category name
+            fragment.setArguments(bundle);
+
+            // Replace the current fragment with the new one using FragmentManager
+            ((FragmentActivity) context).getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragmentContainerID, fragment) // Adjust to your fragment container ID
+                    .addToBackStack(null)  // Add the transaction to the back stack for navigation
+                    .commit();
+        });
     }
 
     // Returns the total count of items in the list
@@ -63,7 +82,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     public static class CategoryViewHolder extends RecyclerView.ViewHolder {
 
         public TextView categoryName;
-        public TextView categoryDescription;
         public ImageView categoryImage;
         public CardView cardView;
 
@@ -72,10 +90,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
 
             // Initialize views from the single cell layout
             categoryName = itemView.findViewById(R.id.category_name);
-            categoryDescription = itemView.findViewById(R.id.categoryDescriptionID);
             categoryImage = itemView.findViewById(R.id.categoryImageID);
             cardView = itemView.findViewById(R.id.card_viewID);
         }
     }
 }
-

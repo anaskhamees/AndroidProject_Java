@@ -1,6 +1,7 @@
 package com.example.foodplanner.NetworkPkg;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.foodplanner.Model.MealPojo;
 import com.example.foodplanner.Model.MealResponse;
@@ -19,12 +20,12 @@ public class MealRemoteDataSource {
     final public static String TAG = "Meal_RetrofitConnection";
     private static MealRemoteDataSource mealRemoteSource = null;
     Retrofit mealRetrofit;
-    RandomMealServiceInterface mealAPI;
+    MealServiceInterface mealAPI;
 
     private MealRemoteDataSource() {
         mealRetrofit = new Retrofit.Builder().baseUrl(apiURL).addConverterFactory(GsonConverterFactory.create())
                 .build();
-        mealAPI = mealRetrofit.create(RandomMealServiceInterface.class);
+        mealAPI = mealRetrofit.create(MealServiceInterface.class);
     }
 
     public static MealRemoteDataSource getMealRemoteDataSourceInstance() {
@@ -98,13 +99,15 @@ public class MealRemoteDataSource {
         MealFilteredByCategoryCall.enqueue(new Callback<MealResponse>() {
             @Override
             public void onResponse(Call<MealResponse> call, Response<MealResponse> response) {
-                if (response.isSuccessful()) {
+                if (response.isSuccessful() && response.body() != null) {
                     Log.d("API Response Successful: ", "Response: " + response.body());
                     Log.i(TAG, "onResponse: Random Meal Successful "+response.body());
                     MealCallBack.onSuccessfulResult(response.body().getMealResponse());
 
                 } else {
-                    Log.e("API Error", "Error code: " + response.code());
+                    Log.i("API Error for fetch meals filter by category", "Error code: " + response.code());
+                    MealCallBack.onFailureResult("No meals found");
+
                 }
             }
 
@@ -115,8 +118,8 @@ public class MealRemoteDataSource {
 
                 MealCallBack.onFailureResult(t.getMessage());
                 t.printStackTrace();
-                Log.i(TAG, "onFailure: Failed to Fetch data from API Server");
-                Log.e("API Error", "Error: " + t.getMessage());
+                Log.i("API Error for fetch meals filter by category",t.getMessage());
+              //  Log.e("API Error", "Error: " + t.getMessage());
 
             }
         });

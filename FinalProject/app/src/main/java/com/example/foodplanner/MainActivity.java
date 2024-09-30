@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
 
     // Declare the LottieAnimationView for the animation
     private LottieAnimationView lottieAnimationView;
+    private boolean isAnimationShown = false; // Flag to track animation display
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,22 +31,31 @@ public class MainActivity extends AppCompatActivity {
         // Initialize the LottieAnimationView
         lottieAnimationView = findViewById(R.id.lottieAnimationView);
 
-        // Start the Lottie animation when the activity loads
-        lottieAnimationView.setVisibility(View.VISIBLE);
-        lottieAnimationView.playAnimation(); // Play the Lottie animation initially
+        // Check if the animation has already been shown
+        if (!isAnimationShown) {
+            // Start the Lottie animation when the activity loads
+            lottieAnimationView.setVisibility(View.VISIBLE);
+            lottieAnimationView.playAnimation(); // Play the Lottie animation initially
 
-        // Delay of 6 seconds for the splash screen
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                // Hide the Lottie animation after 6 seconds
-                lottieAnimationView.setVisibility(View.GONE);
-                lottieAnimationView.cancelAnimation(); // Stop the Lottie animation
+            // Delay of 10 seconds for the splash screen
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    // Hide the Lottie animation after 10 seconds
+                    lottieAnimationView.setVisibility(View.GONE);
+                    lottieAnimationView.cancelAnimation(); // Stop the Lottie animation
 
-                // Load the ListMealCategoriesFragment after the splash screen
-                loadFragment(new ListMealCategoriesFragment());
-            }
-        }, 10000); // 6000 milliseconds = 6 seconds
+                    // Set the flag to indicate that the animation has been shown
+                    isAnimationShown = true;
+
+                    // Load the ListMealCategoriesFragment after the splash screen
+                    loadFragment(new ListMealCategoriesFragment());
+                }
+            }, 5000); // 10000 milliseconds = 10 seconds
+        } else {
+            // If the animation has already been shown, load the default fragment immediately
+            loadFragment(new ListMealCategoriesFragment());
+        }
 
         // Bottom navigation setup
         BottomNavigationView bottomNav = findViewById(R.id.bottomNavigationID);

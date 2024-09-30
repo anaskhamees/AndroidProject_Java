@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.foodplanner.Home.Categories.CategoriesMeals.Presenter.MealsFilteredByCategoryPresenter;
 import com.example.foodplanner.NetworkPkg.MealRemoteDataSource;
 import com.example.foodplanner.R;
 import com.example.foodplanner.Repository.MealRepository;
@@ -27,7 +28,7 @@ public class CategoriesFragment extends Fragment implements CategoriesViewInterf
     private CategoryAdapter categoryAdapter;
     private List<CategoryPojo> categoryList;
     private CategoryPresenter categoryPresenter;
-
+    private MealsFilteredByCategoryPresenter mealsPresenter;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -49,7 +50,7 @@ public class CategoriesFragment extends Fragment implements CategoriesViewInterf
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         categoryAdapter = new CategoryAdapter(getContext(), categoryList);  // Pass the initialized list
         recyclerView.setAdapter(categoryAdapter);
-
+       // categoryAdapter.setOnCategoryClickListener(this);
         // Fetch categories
         categoryPresenter = new CategoryPresenter(this, MealRepository.getInstance(MealRemoteDataSource.getMealRemoteDataSourceInstance()));
         categoryPresenter.getCategories();
@@ -68,4 +69,5 @@ public class CategoriesFragment extends Fragment implements CategoriesViewInterf
         // Display error message to the user
         Toast.makeText(getContext(), errMsg, Toast.LENGTH_SHORT).show();
     }
+
 }
