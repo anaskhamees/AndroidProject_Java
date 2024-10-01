@@ -1,12 +1,12 @@
-package com.example.foodplanner.Home.Categories.CategoriesMeals.View;
+package com.example.foodplanner.Home.Countries.CountriesMeals.View;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.webkit.WebView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
@@ -14,12 +14,12 @@ import com.example.foodplanner.Model.MealPojo;
 import com.example.foodplanner.R;
 import java.util.List;
 
-public class CategoriesMealsAdapter extends RecyclerView.Adapter<CategoriesMealsAdapter.MealViewHolder> {
+public class CountriesMealsAdapter extends RecyclerView.Adapter<CountriesMealsAdapter.MealViewHolder> {
 
     private Context context;
     private List<MealPojo> mealList;
 
-    public CategoriesMealsAdapter(Context context, List<MealPojo> mealList) {
+    public CountriesMealsAdapter(Context context, List<MealPojo> mealList) {
         this.context = context;
         this.mealList = mealList;
     }
@@ -28,7 +28,7 @@ public class CategoriesMealsAdapter extends RecyclerView.Adapter<CategoriesMeals
     @Override
     public MealViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // Inflate the layout for each meal item
-        View view = LayoutInflater.from(context).inflate(R.layout.category_meals, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.country_meals, parent, false);
         return new MealViewHolder(view);
     }
 
@@ -39,50 +39,30 @@ public class CategoriesMealsAdapter extends RecyclerView.Adapter<CategoriesMeals
         // Set meal name
         holder.mealNameTextView.setText(meal.getStrMeal());
 
-        // Load meal image
+        // Load meal image using Glide
         Glide.with(context)
                 .load(meal.getStrMealThumb())
+                .placeholder(R.drawable.loading) // Optional: Placeholder while loading
+                .error(R.drawable.loading) // Optional: Error image if loading fails
                 .into(holder.mealImageView);
-
-
     }
 
     @Override
     public int getItemCount() {
-        return mealList.size();
+        return mealList != null ? mealList.size() : 0; // Ensure safe access
     }
 
     // ViewHolder class to bind UI elements
     static class MealViewHolder extends RecyclerView.ViewHolder {
-        TextView mealNameTextView, mealInstructionsTextView, ingredientsTextView, areaTextView, categoryTextView;
+        TextView mealNameTextView;
         ImageView mealImageView;
-        WebView mealVideoWebView; // WebView for showing YouTube video
 
         public MealViewHolder(@NonNull View itemView) {
             super(itemView);
             // Bind views
             mealNameTextView = itemView.findViewById(R.id.mealNameTextView);
             mealImageView = itemView.findViewById(R.id.mealImageView);
-            mealInstructionsTextView = itemView.findViewById(R.id.mealInstructionsTextView);
-
         }
     }
-
-    // Helper method to format ingredients from MealPojo
-    /*private String formatIngredients(MealPojo meal) {
-        StringBuilder ingredients = new StringBuilder();
-
-        if (meal.getStrIngredient1() != null && !meal.getStrIngredient1().isEmpty()) {
-            ingredients.append("1. ").append(meal.getStrIngredient1()).append("\n");
-        }
-        if (meal.getStrIngredient2() != null && !meal.getStrIngredient2().isEmpty()) {
-            ingredients.append("2. ").append(meal.getStrIngredient2()).append("\n");
-        }
-        if (meal.getStrIngredient3() != null && !meal.getStrIngredient3().isEmpty()) {
-            ingredients.append("3. ").append(meal.getStrIngredient3()).append("\n");
-        }
-        // Add more ingredients as per MealPojo fields
-
-        return ingredients.toString().trim();
-    }*/
 }
+

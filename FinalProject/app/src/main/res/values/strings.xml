@@ -3,4 +3,5 @@
     <string name="mealName">MealName</string>
     <string name="instruction">Instruction\n</string>
     <string name="meal_image">Meal Image</string>
+    <string name="country_flag">country_flag</string>
 </resources>

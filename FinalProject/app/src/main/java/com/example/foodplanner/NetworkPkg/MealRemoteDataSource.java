@@ -3,10 +3,13 @@ package com.example.foodplanner.NetworkPkg;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.foodplanner.Home.Countries.Model.CountryResponse;
 import com.example.foodplanner.Model.MealPojo;
 import com.example.foodplanner.Model.MealResponse;
 import com.example.foodplanner.Home.Categories.Model.CategoryPojo;
 import com.example.foodplanner.Home.Categories.Model.CategoryResponse;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -110,9 +113,6 @@ public class MealRemoteDataSource {
 
                 }
             }
-
-
-
             @Override
             public void onFailure(Call<MealResponse> call, Throwable t) {
 
@@ -124,5 +124,59 @@ public class MealRemoteDataSource {
             }
         });
     }
+
+    public void makeCountriesCallBack(NetworkCallBackInterface<MealPojo> callBack)
+    {
+        Call<CountryResponse> call =mealAPI.getCountriesResponse();
+        call.enqueue(new Callback<CountryResponse>() {
+            @Override
+            public void onResponse(Call<CountryResponse> call, Response<CountryResponse> response) {
+                if(response.isSuccessful()&&response.body()!=null)
+                {
+                    List<MealPojo> countriesFlags=response.body().getCountryResponse();
+                    callBack.onSuccessfulResult(countriesFlags);
+                }else {
+                    callBack.onFailureResult("Error Fetch Countries");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CountryResponse> call, Throwable t) {
+                callBack.onFailureResult(t.getMessage());
+            }
+        });
+    }
+
+    public void makeMealFilteredByCountryNetworkCall(NetworkCallBackInterface<MealPojo> MealCallBack ,String country)
+    {
+        Call<MealResponse> MealFilteredByCountryCall= mealAPI.getMealFilteredByCountry(country);
+        MealFilteredByCountryCall.enqueue(new Callback<MealResponse>() {
+            @Override
+            public void onResponse(Call<MealResponse> call, Response<MealResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    Log.d("API Response Successful: ", "Response: " + response.body());
+                    Log.i(TAG, "onResponse: Country Meal Successful "+response.body());
+                    MealCallBack.onSuccessfulResult(response.body().getMealResponse());
+
+                } else {
+                    Log.i("API Error for fetch meals filter by country", "Error code: " + response.code());
+                    MealCallBack.onFailureResult("No meals found");
+
+                }
+            }
+            @Override
+            public void onFailure(Call<MealResponse> call, Throwable t) {
+
+                MealCallBack.onFailureResult(t.getMessage());
+                t.printStackTrace();
+                Log.i("API Error for fetch meals filter by country",t.getMessage());
+                //  Log.e("API Error", "Error: " + t.getMessage());
+
+            }
+        });
+    }
+
+
+
 
 }

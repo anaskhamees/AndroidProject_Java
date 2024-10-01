@@ -38,4 +38,14 @@ public class MealRepository implements RepositoryInterface {
     public void fetchMealFilteredByCategory(NetworkCallBackInterface networkCallBackInterface, String category) {
         mealRemoteDataSource.makeMealFilteredByCategoryNetworkCall(networkCallBackInterface,category);
     }
+
+    @Override
+    public void fetchCountries(NetworkCallBackInterface networkCallBackInterface) {
+        mealRemoteDataSource.makeCountriesCallBack(networkCallBackInterface);
+    }
+
+    @Override
+    public void fetchMealFilteredByCountry(NetworkCallBackInterface networkCallBackInterface, String country) {
+        mealRemoteDataSource.makeMealFilteredByCountryNetworkCall(networkCallBackInterface,country);
+    }
 }

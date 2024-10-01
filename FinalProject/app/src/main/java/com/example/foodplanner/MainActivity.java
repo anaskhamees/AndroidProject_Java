@@ -1,17 +1,13 @@
 package com.example.foodplanner;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
-import com.airbnb.lottie.LottieAnimationView;
 import com.example.foodplanner.RandomMealFeature.View.RandomMealFragment;
 import com.example.foodplanner.Home.ListMealCategoriesFragment;
 import com.example.foodplanner.FavoritesFeature.View.FavoritesFragment;
@@ -19,43 +15,13 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
-    // Declare the LottieAnimationView for the animation
-    private LottieAnimationView lottieAnimationView;
-    private boolean isAnimationShown = false; // Flag to track animation display
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Initialize the LottieAnimationView
-        lottieAnimationView = findViewById(R.id.lottieAnimationView);
-
-        // Check if the animation has already been shown
-        if (!isAnimationShown) {
-            // Start the Lottie animation when the activity loads
-            lottieAnimationView.setVisibility(View.VISIBLE);
-            lottieAnimationView.playAnimation(); // Play the Lottie animation initially
-
-            // Delay of 10 seconds for the splash screen
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    // Hide the Lottie animation after 10 seconds
-                    lottieAnimationView.setVisibility(View.GONE);
-                    lottieAnimationView.cancelAnimation(); // Stop the Lottie animation
-
-                    // Set the flag to indicate that the animation has been shown
-                    isAnimationShown = true;
-
-                    // Load the ListMealCategoriesFragment after the splash screen
-                    loadFragment(new ListMealCategoriesFragment());
-                }
-            }, 5000); // 10000 milliseconds = 10 seconds
-        } else {
-            // If the animation has already been shown, load the default fragment immediately
-            loadFragment(new ListMealCategoriesFragment());
-        }
+        // Load the default fragment (ListMealCategoriesFragment)
+        loadFragment(new ListMealCategoriesFragment());
 
         // Bottom navigation setup
         BottomNavigationView bottomNav = findViewById(R.id.bottomNavigationID);
@@ -65,22 +31,16 @@ public class MainActivity extends AppCompatActivity {
                 Fragment selectedFragment = null;
 
                 if (item.getItemId() == R.id.nav_homeID) {
-                    hideAllFragments();
-                    lottieAnimationView.setVisibility(View.VISIBLE);
-                    lottieAnimationView.playAnimation();
-                    return true; // No fragment to load for Home
+                    selectedFragment = new ListMealCategoriesFragment();
                 } else if (item.getItemId() == R.id.nav_random_mealID) {
                     selectedFragment = new RandomMealFragment();
                 } else if (item.getItemId() == R.id.nav_search_mealID) {
-                    selectedFragment = new ListMealCategoriesFragment();
+                    selectedFragment = new Fragment();
                     Toast.makeText(MainActivity.this, "Search for Meals", Toast.LENGTH_LONG).show();
                 } else if (item.getItemId() == R.id.nav_favoritesID) {
                     selectedFragment = new FavoritesFragment();
                     Toast.makeText(MainActivity.this, "Favorite Meals", Toast.LENGTH_LONG).show();
-                } else if (item.getItemId() == R.id.nav_categoryID) {
-                    selectedFragment = new Fragment(); // Update this with the actual fragment
-                    Toast.makeText(MainActivity.this, "Meals Category", Toast.LENGTH_LONG).show();
-                }
+                 }
 
                 return loadFragment(selectedFragment);
             }
@@ -98,23 +58,12 @@ public class MainActivity extends AppCompatActivity {
         return false;
     }
 
-    // Method to hide all fragments in the fragment manager
-    private void hideAllFragments() {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        for (Fragment fragment : getSupportFragmentManager().getFragments()) {
-            transaction.hide(fragment);
-        }
-        transaction.commit();
-    }
-
     @Override
     public void onBackPressed() {
-        // Handle the back press gracefully by loading the default fragment (ListMealCategoriesFragment)
+        // Handle the back press gracefully
         if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
-            // Load ListMealCategoriesFragment if no fragment is in the back stack
             loadFragment(new ListMealCategoriesFragment());
         } else {
-            // Otherwise, let the default back behavior handle
             super.onBackPressed();
         }
     }

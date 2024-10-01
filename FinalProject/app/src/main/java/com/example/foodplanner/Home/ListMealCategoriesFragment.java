@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.foodplanner.Home.Countries.View.CountriesFragment;
 import com.example.foodplanner.R;
 import com.example.foodplanner.Home.Categories.View.CategoriesFragment;  // Import your CategoriesFragment
 
@@ -28,7 +29,13 @@ public class ListMealCategoriesFragment extends Fragment {
             openCategoriesFragment();  // Call method to switch to CategoriesFragment
         });
 
-        view.findViewById(R.id.countriesImage).setOnClickListener(v -> showToast("Countries"));
+        view.findViewById(R.id.countriesImage).setOnClickListener(v -> {
+            showToast("Countries");
+            openCountriesFragment();
+
+        });
+
+
         view.findViewById(R.id.ingredientsImage).setOnClickListener(v -> showToast("Ingredients"));
 
         return view;
@@ -48,6 +55,24 @@ public class ListMealCategoriesFragment extends Fragment {
 
         // Replace the current fragment with CategoriesFragment
         fragmentTransaction.replace(R.id.fragmentContainerID, categoriesFragment);
+
+        // Optionally, add the transaction to the back stack if you want to allow back navigation
+        fragmentTransaction.addToBackStack(null);
+
+        // Commit the transaction
+        fragmentTransaction.commit();
+    }
+
+    private void openCountriesFragment() {
+        // Create an instance of CategoriesFragment
+        CountriesFragment countriesFragment = new CountriesFragment();
+
+        // Get FragmentManager and start a transaction
+        FragmentManager fragmentManager = getParentFragmentManager();  // Use getParentFragmentManager() instead of getFragmentManager()
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+        // Replace the current fragment with CategoriesFragment
+        fragmentTransaction.replace(R.id.fragmentContainerID, countriesFragment);
 
         // Optionally, add the transaction to the back stack if you want to allow back navigation
         fragmentTransaction.addToBackStack(null);

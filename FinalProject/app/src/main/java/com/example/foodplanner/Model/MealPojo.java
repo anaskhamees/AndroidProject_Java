@@ -168,6 +168,81 @@ public class MealPojo {
         this.strInstructions = strInstructions;
     }
 
+
+    public String getFlagUrl() {
+        String countryCode = getCountryCode(this.strArea);
+        return "https://flagcdn.com/160x120/" + countryCode + ".png";
+    }
+
+  /*  public String getIngredientUrl(){
+        return "https://www.themealdb.com/images/ingredients/" + strIngredient +".png";
+    }*/
+
+    private String getCountryCode(String countryName) {
+        // Map country names to their codes
+        switch (countryName.toLowerCase()) {
+            case "american":
+                return "us";
+            case "british":
+                return "gb";
+            case "canadian":
+                return "ca";
+            case "chinese":
+                return "cn";
+            case "croatian":
+                return "hr";
+            case "dutch":
+                return "nl";
+            case "egyptian":
+                return "eg";
+            case "filipino":
+                return "ph";
+            case "french":
+                return "fr";
+            case "greek":
+                return "gr";
+            case "indian":
+                return "in";
+            case "irish":
+                return "ie";
+            case "italian":
+                return "it";
+            case "jamaican":
+                return "jm";
+            case "japanese":
+                return "jp";
+            case "kenyan":
+                return "ke";
+            case "malaysian":
+                return "my";
+            case "mexican":
+                return "mx";
+            case "moroccan":
+                return "ma";
+            case "polish":
+                return "pl";
+            case "portuguese":
+                return "pt";
+            case "russian":
+                return "ru";
+            case "spanish":
+                return "es";
+            case "thai":
+                return "th";
+            case "tunisian":
+                return "tn";
+            case "turkish":
+                return "tr";
+            case "ukrainian":
+                return "ua";
+            case "unknown":
+                return ""; // For unknown, we can return an empty string or a default value
+            case "vietnamese":
+                return "vn";
+            default:
+                return ""; // Default case for unmapped countries
+        }
+    }
     public Object getStrTags() {
         return strTags;
     }

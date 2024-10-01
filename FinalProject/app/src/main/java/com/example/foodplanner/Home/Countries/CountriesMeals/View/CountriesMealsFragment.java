@@ -1,5 +1,4 @@
-package com.example.foodplanner.Home.Categories.CategoriesMeals.View;
-
+package com.example.foodplanner.Home.Countries.CountriesMeals.View;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +11,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.foodplanner.Home.Categories.CategoriesMeals.Presenter.MealsFilteredByCategoryPresenter;
+import com.example.foodplanner.Home.Countries.CountriesMeals.Presenter.MealsFilteredByCountriesPresenter;
+import com.example.foodplanner.Home.Countries.CountriesMeals.Presenter.MealsFilteredByCountriesPresenterInterface;
 import com.example.foodplanner.Model.MealPojo;
 import com.example.foodplanner.NetworkPkg.MealRemoteDataSource;
 import com.example.foodplanner.R;
@@ -21,15 +21,15 @@ import com.example.foodplanner.Repository.MealRepository;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CategoriesMealsFragment extends Fragment implements MealsFilteredByCategoryViewInterface {
+public class CountriesMealsFragment extends Fragment implements MealsFilteredByCountriesViewInterface {
 
     private RecyclerView mealsRecyclerView;
-    private CategoriesMealsAdapter mealAdapter;
+    private CountriesMealsAdapter mealAdapter;
     private List<MealPojo> mealList = new ArrayList<>(); // Initialize to avoid NullPointerException
-    private MealsFilteredByCategoryPresenter mealsPresenter;
+    private MealsFilteredByCountriesPresenter mealsPresenter;
 
     // Constructor is removed to avoid passing the mealList. Instead, initialize it here.
-    public CategoriesMealsFragment() {
+    public CountriesMealsFragment() {
         // Required empty public constructor
     }
 
@@ -48,30 +48,27 @@ public class CategoriesMealsFragment extends Fragment implements MealsFilteredBy
         mealsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         // Initialize adapter with empty meal list
-        mealAdapter = new CategoriesMealsAdapter(getContext(), mealList);
+        mealAdapter = new CountriesMealsAdapter(getContext(), mealList);
         mealsRecyclerView.setAdapter(mealAdapter);
 
         // Fetch meals by category (pass category name from the adapter or an activity)
-        String selectedCategory = getArguments().getString("CATEGORY_NAME");
-        mealsPresenter = new MealsFilteredByCategoryPresenter(MealRepository.getInstance(MealRemoteDataSource.getMealRemoteDataSourceInstance()), this);
-        mealsPresenter.getMealsFilteredByCategory(selectedCategory);
+        String selectedCountry = getArguments().getString("COUNTRY_NAME");
+        mealsPresenter = new MealsFilteredByCountriesPresenter(MealRepository.getInstance(MealRemoteDataSource.getMealRemoteDataSourceInstance()), this);
+        mealsPresenter.getMealsFilteredByCountry(selectedCountry);
     }
+
 
     @Override
-    public void displayMealsFilteredByCategory(List<MealPojo> categoriesMeals) {
-        if (categoriesMeals != null) {
-            mealList.clear(); // Clear the current list
-            mealList.addAll(categoriesMeals); // Add new data to the list
-            mealAdapter.notifyDataSetChanged(); // Notify adapter for UI update
-        } else {
-            // Handle the case when categoriesMeals is null
-            displyError("No meals found for this category."); // Optional: show an error message
-        }
+    public void displayMealsFilteredByCountry(List<MealPojo> countriesMeals) {
+        mealList.clear();
+        mealList.addAll(countriesMeals);
+        mealAdapter.notifyDataSetChanged();
     }
-
 
     @Override
     public void displyError(String errMsg) {
         Toast.makeText(getContext(), errMsg, Toast.LENGTH_SHORT).show();
     }
+
 }
+

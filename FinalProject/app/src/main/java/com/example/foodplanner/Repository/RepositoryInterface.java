@@ -6,4 +6,8 @@ public interface RepositoryInterface {
     public void fetchRandomMeal(NetworkCallBackInterface networkCallBackInterface);
     public void fetchCategories(NetworkCallBackInterface networkCallBackInterface);
     public void fetchMealFilteredByCategory(NetworkCallBackInterface networkCallBackInterface, String category);
+    void fetchCountries(NetworkCallBackInterface networkCallBackInterface);
+    public void fetchMealFilteredByCountry(NetworkCallBackInterface networkCallBackInterface, String country);
+
+
 }

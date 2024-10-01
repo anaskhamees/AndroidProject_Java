@@ -1,5 +1,6 @@
 package com.example.foodplanner.NetworkPkg;
 
+import com.example.foodplanner.Home.Countries.Model.CountryResponse;
 import com.example.foodplanner.Model.MealResponse;
 import com.example.foodplanner.Home.Categories.Model.CategoryResponse;
 
@@ -22,4 +23,10 @@ public interface MealServiceInterface {
 
     @GET("filter.php")
     Call<MealResponse> getMealFilteredByIngredient(@Query("i") String ingredient );
+
+    @GET("list.php?a=list")
+    Call<CountryResponse> getCountriesResponse();
+
+   // @GET("list.php?i=list")
+    //Call<IngredientResponse> getIngredients();
 }

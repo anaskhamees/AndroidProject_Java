@@ -1,139 +1,145 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp"
-    android:gravity="center"
-    android:background="#ECEFF1">
+    android:fillViewport="true">
 
-    <!-- Title: Search By -->
-    <TextView
-        android:id="@+id/titleText"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Search By"
-        android:textColor="#009688"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        android:fontFamily="sans-serif-medium"
-        android:layout_gravity="center"
-        android:layout_marginBottom="24dp"
+        android:orientation="vertical"
+        android:padding="16dp"
         android:gravity="center"
-        android:letterSpacing="0.1"
-        android:shadowColor="#4D000000"
-        android:shadowRadius="2"
-        android:shadowDx="2"
-        android:shadowDy="2"
-        android:padding="8dp" />
+        android:background="#ECEFF1">
 
-    <!-- Card 1: Categories -->
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginBottom="16dp"
-        card_view:cardCornerRadius="8dp"
-        card_view:cardElevation="6dp"
-        android:onClick="onCardClick">
+        <!-- Title: Search By -->
+        <TextView
+            android:id="@+id/titleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Search By"
+            android:textColor="#009688"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif-medium"
+            android:layout_gravity="center"
+            android:layout_marginBottom="24dp"
+            android:gravity="center"
+            android:letterSpacing="0.1"
+            android:shadowColor="#4D000000"
+            android:shadowRadius="2"
+            android:shadowDx="2"
+            android:shadowDy="2"
+            android:padding="8dp" />
 
-        <RelativeLayout
+        <!-- Card 1: Categories -->
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="200dp"
+            android:layout_marginBottom="16dp"
+            card_view:cardCornerRadius="8dp"
+            card_view:cardElevation="6dp"
+            android:onClick="onCardClick">
 
-            <ImageView
-                android:id="@+id/categoriesImage"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                android:src="@drawable/food_category" />
+                android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/categoriesName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:padding="8dp"
-                android:text="Categories"
-                android:textColor="#FFFFFF"
-                android:textStyle="bold"
-                android:textSize="26sp"
-                android:background="@drawable/text_bg" />
+                <ImageView
+                    android:id="@+id/categoriesImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/food_category" />
 
-        </RelativeLayout>
-    </androidx.cardview.widget.CardView>
+                <TextView
+                    android:id="@+id/categoriesName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:padding="8dp"
+                    android:text="Categories"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:textSize="26sp"
+                    android:background="@drawable/text_bg" />
 
-    <!-- Card 2: Countries -->
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginBottom="16dp"
-        card_view:cardCornerRadius="8dp"
-        card_view:cardElevation="6dp"
-        android:onClick="onCardClick">
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
 
-        <RelativeLayout
+        <!-- Card 2: Countries -->
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="200dp"
+            android:layout_marginBottom="16dp"
+            card_view:cardCornerRadius="8dp"
+            card_view:cardElevation="6dp"
+            android:onClick="onCardClick">
 
-            <ImageView
-                android:id="@+id/countriesImage"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                android:src="@drawable/food_countries" />
+                android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/countriesName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:padding="8dp"
-                android:text="Countries"
-                android:textColor="#FFFFFF"
-                android:textStyle="bold"
-                android:textSize="26sp"
-                android:background="@drawable/text_bg" />
+                <ImageView
+                    android:id="@+id/countriesImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/food_countries" />
 
-        </RelativeLayout>
-    </androidx.cardview.widget.CardView>
+                <TextView
+                    android:id="@+id/countriesName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:padding="8dp"
+                    android:text="Countries"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:textSize="26sp"
+                    android:background="@drawable/text_bg" />
 
-    <!-- Card 3: Ingredients -->
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginBottom="16dp"
-        card_view:cardCornerRadius="8dp"
-        card_view:cardElevation="6dp"
-        android:onClick="onCardClick">
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
 
-        <RelativeLayout
+        <!-- Card 3: Ingredients -->
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="200dp"
+            android:layout_marginBottom="16dp"
+            card_view:cardCornerRadius="8dp"
+            card_view:cardElevation="6dp"
+            android:onClick="onCardClick">
 
-            <ImageView
-                android:id="@+id/ingredientsImage"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                android:src="@drawable/ingredients" />
+                android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/ingredientsName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:padding="8dp"
-                android:text="Ingredients"
-                android:textColor="#FFFFFF"
-                android:textStyle="bold"
-                android:textSize="26sp"
-                android:background="@drawable/text_bg" />
+                <ImageView
+                    android:id="@+id/ingredientsImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ingredients" />
 
-        </RelativeLayout>
-    </androidx.cardview.widget.CardView>
+                <TextView
+                    android:id="@+id/ingredientsName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:padding="8dp"
+                    android:text="Ingredients"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:textSize="26sp"
+                    android:background="@drawable/text_bg" />
 
-</LinearLayout>
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+</ScrollView>
