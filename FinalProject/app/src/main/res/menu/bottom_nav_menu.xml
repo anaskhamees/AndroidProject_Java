@@ -2,7 +2,7 @@
     <item
         android:id="@+id/nav_homeID"
         android:icon="@drawable/ic_home"
-        android:title="Home" />
+        android:title="Home"/>
     <item
         android:id="@+id/nav_random_mealID"
         android:icon="@drawable/ic_random_meal"
@@ -13,6 +13,8 @@
         android:title="Search Meal" />
     <item
         android:id="@+id/nav_favoritesID"
+        android:checkable="false"
+        android:enabled="true"
         android:icon="@drawable/ic_favorite"
         android:title="Favorites" />
 </menu>

@@ -21,7 +21,7 @@ public class ListMealCategoriesFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.search_fragment, container, false);
+        View view = inflater.inflate(R.layout.home_search_fragment, container, false);
 
         // Set onClickListener for the Cards
         view.findViewById(R.id.categoriesImage).setOnClickListener(v -> {

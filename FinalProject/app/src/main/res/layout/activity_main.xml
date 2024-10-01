@@ -18,6 +18,9 @@
         android:layout_width="match_parent"
         android:layout_height="66dp"
         android:layout_alignParentBottom="true"
+        android:clipToPadding="false"
+        app:itemPaddingBottom="9dp"
+        app:itemPaddingTop="11dp"
         app:menu="@menu/bottom_nav_menu" />
 
 </RelativeLayout>

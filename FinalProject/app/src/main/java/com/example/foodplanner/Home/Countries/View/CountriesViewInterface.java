@@ -1,6 +1,5 @@
 package com.example.foodplanner.Home.Countries.View;
 
-import com.example.foodplanner.Home.Countries.Model.CountriesPojo;
 import com.example.foodplanner.Model.MealPojo;
 
 import java.util.List;
