@@ -110,7 +110,6 @@ public class MealRemoteDataSource {
                 } else {
                     Log.i("API Error for fetch meals filter by category", "Error code: " + response.code());
                     MealCallBack.onFailureResult("No meals found");
-
                 }
             }
             @Override

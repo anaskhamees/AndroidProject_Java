@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import com.example.foodplanner.RandomMealFeature.View.RandomMealFragment;
 import com.example.foodplanner.Home.ListMealCategoriesFragment;
 import com.example.foodplanner.FavoritesFeature.View.FavoritesFragment;
+import com.example.foodplanner.SearchMealFeature.View.SearchFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -35,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
                 } else if (item.getItemId() == R.id.nav_random_mealID) {
                     selectedFragment = new RandomMealFragment();
                 } else if (item.getItemId() == R.id.nav_search_mealID) {
-                    selectedFragment = new Fragment();
+                    selectedFragment = new SearchFragment();
                     Toast.makeText(MainActivity.this, "Search for Meals", Toast.LENGTH_LONG).show();
                 } else if (item.getItemId() == R.id.nav_favoritesID) {
                     selectedFragment = new FavoritesFragment();

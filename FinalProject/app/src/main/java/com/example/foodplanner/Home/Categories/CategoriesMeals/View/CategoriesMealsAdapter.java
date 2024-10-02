@@ -28,7 +28,7 @@ public class CategoriesMealsAdapter extends RecyclerView.Adapter<CategoriesMeals
     @Override
     public MealViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // Inflate the layout for each meal item
-        View view = LayoutInflater.from(context).inflate(R.layout.category_meals, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.single_meal_general, parent, false);
         return new MealViewHolder(view);
     }
 
