@@ -24,9 +24,13 @@ public interface MealServiceInterface {
     @GET("filter.php")
     Call<MealResponse> getMealFilteredByIngredient(@Query("i") String ingredient );
 
+    @GET("search.php")
+    Call<MealResponse> getMealByName(@Query("s") String name);
+
     @GET("list.php?a=list")
     Call<CountryResponse> getCountriesResponse();
 
-   // @GET("list.php?i=list")
+
+   //@GET("list.php?i=list")
     //Call<IngredientResponse> getIngredients();
 }

@@ -1,6 +1,7 @@
 package com.example.foodplanner.Home.Categories.CategoriesMeals.View;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,8 +9,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.webkit.WebView;
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
+import com.example.foodplanner.MealDetails.View.MealDetailsFragment;
 import com.example.foodplanner.Model.MealPojo;
 import com.example.foodplanner.R;
 import java.util.List;
@@ -43,6 +46,23 @@ public class CategoriesMealsAdapter extends RecyclerView.Adapter<CategoriesMeals
         Glide.with(context)
                 .load(meal.getStrMealThumb())
                 .into(holder.mealImageView);
+
+        // Set up the click listener for the item
+        holder.itemView.setOnClickListener(v -> {
+            // Create a new instance of MealDetailsFragment
+            MealDetailsFragment fragment = new MealDetailsFragment();
+
+            // Create a bundle to pass the selected meal name to the new fragment
+            Bundle bundle = new Bundle();
+            bundle.putString("MEAL_NAME", meal.getStrMeal()); // Pass the selected meal name
+            fragment.setArguments(bundle);
+
+            // Replace the current fragment with the new one using FragmentManager
+            ((FragmentActivity) context).getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragmentContainerID, fragment) // Adjust to your fragment container ID
+                    .addToBackStack(null)  // Add the transaction to the back stack for navigation
+                    .commit();
+        });
 
 
     }

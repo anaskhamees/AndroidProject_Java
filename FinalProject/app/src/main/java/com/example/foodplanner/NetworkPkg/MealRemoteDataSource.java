@@ -175,6 +175,57 @@ public class MealRemoteDataSource {
         });
     }
 
+    public void makeMealByNameNetworkCallBack(NetworkCallBackInterface<MealPojo> MealCallBack ,String name)
+    {
+        Call<MealResponse> MealByNameCall= mealAPI.getMealByName(name);
+        MealByNameCall.enqueue(new Callback<MealResponse>() {
+            @Override
+            public void onResponse(Call<MealResponse> call, Response<MealResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    Log.i(TAG, "onResponse:  MealByName Successful "+response.body());
+                    MealCallBack.onSuccessfulResult(response.body().getMealResponse());
+
+                } else {
+                    Log.i("API Error for fetch meals filter by name", "Error code: " + response.code());
+                    MealCallBack.onFailureResult("No meals found");
+                }
+            }
+            @Override
+            public void onFailure(Call<MealResponse> call, Throwable t) {
+                MealCallBack.onFailureResult(t.getMessage());
+                t.printStackTrace();
+                Log.i("API Error for fetch meals filter by name",t.getMessage());
+                //  Log.e("API Error", "Error: " + t.getMessage());
+
+            }
+        });
+    }
+
+    public void makeMealByIngredientNetworkCallBack(NetworkCallBackInterface<MealPojo> MealCallBack ,String ingredient)
+    {
+        Call<MealResponse> MealByIngredientCall= mealAPI.getMealFilteredByIngredient(ingredient);
+        MealByIngredientCall.enqueue(new Callback<MealResponse>() {
+            @Override
+            public void onResponse(Call<MealResponse> call, Response<MealResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    Log.i(TAG, "onResponse:  MealByIngredient Successful "+response.body());
+                    MealCallBack.onSuccessfulResult(response.body().getMealResponse());
+
+                } else {
+                    Log.i("API Error for fetch meals filter by ingredient", "Error code: " + response.code());
+                    MealCallBack.onFailureResult("No meals found");
+                }
+            }
+            @Override
+            public void onFailure(Call<MealResponse> call, Throwable t) {
+                MealCallBack.onFailureResult(t.getMessage());
+                t.printStackTrace();
+                Log.i("API Error for fetch meals filter by ingredient",t.getMessage());
+                //  Log.e("API Error", "Error: " + t.getMessage());
+
+            }
+        });
+    }
 
 
 

@@ -1,15 +1,16 @@
 package com.example.foodplanner.SearchMealFeature.View;
-
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
+import android.widget.ArrayAdapter;
 import android.widget.SearchView;
+import android.widget.Spinner;
 import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.foodplanner.Model.MealPojo;
 import com.example.foodplanner.NetworkPkg.MealRemoteDataSource;
@@ -25,15 +26,12 @@ public class SearchFragment extends Fragment implements SearchViewInterface {
     private SearchAdapter searchAdapter;
     private RecyclerView mealsRecyclerView;
     private SearchView searchView;
-    private CheckBox mealCheckBox, countriesCheckBox, categoriesCheckBox, ingredientsCheckBox;
+    private Spinner searchTypeSpinner;
     private List<MealPojo> mealList = new ArrayList<>();
     private SearchPresenter searchPresenter;
 
-    // Variables to track the selected search type
-    private boolean isMealSelected = false;
-    private boolean isCountrySelected = false;
-    private boolean isCategorySelected = false;
-    private boolean isIngredientSelected = false;
+    // Variables for search type
+    private String[] searchOptions = {"Meal", "Countries", "Categories", "Ingredients"};
 
     public SearchFragment() {
         // Required empty public constructor
@@ -53,73 +51,39 @@ public class SearchFragment extends Fragment implements SearchViewInterface {
 
         mealsRecyclerView = view.findViewById(R.id.MealsRecyclerViewID);
         searchView = view.findViewById(R.id.searchViewID);
-        mealCheckBox = view.findViewById(R.id.mealCheckBox1ID);
-        countriesCheckBox = view.findViewById(R.id.countriesCheckBox2ID);
-        categoriesCheckBox = view.findViewById(R.id.categoriesCheckBox3ID);
-        ingredientsCheckBox = view.findViewById(R.id.ingretientCheckBox4ID);
+        searchTypeSpinner = view.findViewById(R.id.searchTypeSpinner);
 
+        // Set up RecyclerView
         mealsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         searchAdapter = new SearchAdapter(getContext(), mealList);
         mealsRecyclerView.setAdapter(searchAdapter);
 
         searchPresenter = new SearchPresenter(MealRepository.getInstance(MealRemoteDataSource.getMealRemoteDataSourceInstance()), this);
 
-        // Set up checkbox listeners to update the search mode
-        mealCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                resetCheckBoxesExcept(mealCheckBox);
-                isMealSelected = true;
-                searchView.setQueryHint("Search By Meal Name ...");
-            } else {
-                isMealSelected = false;
-            }
-        });
+        // Set up Spinner with search options
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(getContext(),
+                android.R.layout.simple_spinner_item, searchOptions);
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        searchTypeSpinner.setAdapter(spinnerAdapter);
 
-        countriesCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                resetCheckBoxesExcept(countriesCheckBox);
-                isCountrySelected = true;
-                searchView.setQueryHint("Search By Country Name ...");
-            } else {
-                isCountrySelected = false;
-            }
-        });
-
-        categoriesCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                resetCheckBoxesExcept(categoriesCheckBox);
-                isCategorySelected = true;
-                searchView.setQueryHint("Search By Category Name ...");
-            } else {
-                isCategorySelected = false;
-            }
-        });
-
-        ingredientsCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                resetCheckBoxesExcept(ingredientsCheckBox);
-                isIngredientSelected = true;
-                searchView.setQueryHint("Search By Ingredient Name ...");
-            } else {
-                isIngredientSelected = false;
-            }
-        });
-
-        // Handle search queries based on selected checkbox
+        // Handle search queries
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 mealList.clear();
                 searchAdapter.notifyDataSetChanged();
-                if (isMealSelected) {
-                   // searchPresenter.searchMealsByName(query);
-                } else if (isCountrySelected) {
-                    searchPresenter.getMealsByCountry(query); //Enter the Country
-                } else if (isCategorySelected) {
+                String selectedSearchType = searchTypeSpinner.getSelectedItem().toString();
+
+                if (selectedSearchType.equals("Meal")) {
+                   searchPresenter.getMealsByName(query);
+                } else if (selectedSearchType.equals("Countries")) {
+                    searchPresenter.getMealsByCountry(query);
+                } else if (selectedSearchType.equals("Categories")) {
                     searchPresenter.getMealsByCategory(query);
-                } else if (isIngredientSelected) {
-                   // searchPresenter.searchMealsByIngredient(query);
+                } else if (selectedSearchType.equals("Ingredients")) {
+                    searchPresenter.getMealsByIngredient(query);
                 }
+
                 return false;
             }
 
@@ -132,23 +96,13 @@ public class SearchFragment extends Fragment implements SearchViewInterface {
         return view;
     }
 
-    // Method to reset other checkboxes when one is selected
-    private void resetCheckBoxesExcept(CheckBox selectedCheckBox) {
-        if (selectedCheckBox != mealCheckBox) mealCheckBox.setChecked(false);
-        if (selectedCheckBox != countriesCheckBox) countriesCheckBox.setChecked(false);
-        if (selectedCheckBox != categoriesCheckBox) categoriesCheckBox.setChecked(false);
-        if (selectedCheckBox != ingredientsCheckBox) ingredientsCheckBox.setChecked(false);
-    }
-
     @Override
     public void displayMeals(List<MealPojo> meals) {
-        if(meals!=null)
-        {
+        if (meals != null) {
             mealList.clear();
             mealList.addAll(meals);
             searchAdapter.notifyDataSetChanged();
-        }
-        else {
+        } else {
             Toast.makeText(getContext(), "No Meals Found", Toast.LENGTH_SHORT).show();
         }
     }

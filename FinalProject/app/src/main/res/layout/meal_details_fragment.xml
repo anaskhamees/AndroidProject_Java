@@ -59,16 +59,16 @@
 
             <TextView
                 android:id="@+id/IngredientsHeaher"
-                android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="8dp"
+                android:fontFamily="sans-serif"
                 android:text="Meal Ingredients"
                 android:textAlignment="center"
-                android:textSize="25dp"
-                android:textStyle="bold"
                 android:textColor="@color/black"
-                android:fontFamily="sans-serif"  />
+                android:textSize="25dp"
+                android:textStyle="bold" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/ingridientCardView"

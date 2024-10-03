@@ -1,6 +1,7 @@
 package com.example.foodplanner.SearchMealFeature.View;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,11 +11,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.foodplanner.Model.MealPojo;
 import com.example.foodplanner.R;
+import com.example.foodplanner.MealDetails.View.MealDetailsFragment;
 
 import java.util.List;
 
@@ -50,16 +53,30 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
         Glide.with(context)
                 .load(meal.getStrMealThumb()) // Image URL or resource
                 .into(holder.mealImageView);
+
+        // Set up the click listener for the item
+        holder.itemView.setOnClickListener(v -> {
+            // Create a new instance of MealDetailsFragment
+            MealDetailsFragment fragment = new MealDetailsFragment();
+
+            // Create a bundle to pass the selected meal name to the new fragment
+            Bundle bundle = new Bundle();
+            bundle.putString("MEAL_NAME", meal.getStrMeal()); // Pass the selected meal name
+            fragment.setArguments(bundle);
+
+            // Replace the current fragment with the new one using FragmentManager
+            ((FragmentActivity) context).getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragmentContainerID, fragment) // Adjust to your fragment container ID
+                    .addToBackStack(null)  // Add the transaction to the back stack for navigation
+                    .commit();
+        });
     }
 
     // Returns the total number of items in the data set
     @Override
     public int getItemCount() {
-        String count= String.valueOf(meals.size());
-        Toast.makeText(context, "Meals Counts :"+count, Toast.LENGTH_SHORT).show();
-        Log.i("SearchAdapter", "getItemCount: "+count);
+        Log.i("SearchAdapter", "getItemCount: " + meals.size());
         return meals.size();
-
     }
 
     // ViewHolder class that holds the views for each item in RecyclerView

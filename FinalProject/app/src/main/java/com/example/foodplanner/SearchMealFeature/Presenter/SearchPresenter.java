@@ -39,7 +39,7 @@ public class SearchPresenter implements SearchPresenterInterface, NetworkCallBac
 
     @Override
     public void getMealsByName(String name) {
-
+        mealRepo.fetchMealByName(this,name);
     }
 
     @Override
@@ -48,7 +48,7 @@ public class SearchPresenter implements SearchPresenterInterface, NetworkCallBac
     }
 
     @Override
-    public void getMealsByIngredient(String ingredent) {
-
+    public void getMealsByIngredient(String ingredient) {
+        mealRepo.fetchMealByIngredient(this,ingredient);
     }
 }
