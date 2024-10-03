@@ -57,6 +57,51 @@
                     app:shapeAppearanceOverlay="@style/RoundedImageStyle" />
             </androidx.cardview.widget.CardView>
 
+            <TextView
+                android:id="@+id/IngredientsHeaher"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="8dp"
+                android:text="Meal Ingredients"
+                android:textAlignment="center"
+                android:textSize="25dp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:fontFamily="sans-serif"  />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/ingridientCardView"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="10dp">
+
+            <!-- RecyclerView for displaying ingredients -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/ingredientsRecyclerViewID"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal"
+                android:paddingBottom="16dp"
+                tools:listitem="@layout/item_ingredient" />
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/InstructionsHeaher"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Meal Instructions"
+                android:textAlignment="center"
+                android:textSize="25dp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:fontFamily="sans-serif"  />
+
             <!-- CardView with Meal Instructions TextView and padding -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
@@ -93,6 +138,7 @@
                 android:layout_marginTop="16dp"
                 android:background="@android:color/black" />
 
+            <!-- Add to Favorites Button -->
             <Button
                 android:id="@+id/addToFavoritesButton"
                 android:layout_width="wrap_content"
@@ -101,7 +147,6 @@
                 android:layout_marginTop="16dp"
                 android:textColor="@color/black"
                 android:backgroundTint="#40E0D0" />
-
 
         </LinearLayout>
     </ScrollView>

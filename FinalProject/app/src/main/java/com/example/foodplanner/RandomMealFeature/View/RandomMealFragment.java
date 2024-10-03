@@ -17,6 +17,10 @@ import android.webkit.WebViewClient;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
 import com.example.foodplanner.R;
 import com.example.foodplanner.Model.MealPojo;
@@ -24,6 +28,7 @@ import com.example.foodplanner.Repository.MealRepository;
 import com.example.foodplanner.NetworkPkg.MealRemoteDataSource;
 import com.example.foodplanner.RandomMealFeature.Presenter.RandomMealPresenter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RandomMealFragment extends Fragment implements RandomMealViewInterface {
@@ -34,13 +39,17 @@ public class RandomMealFragment extends Fragment implements RandomMealViewInterf
     private ImageView mealImageView;
     private WebView videoWebView;
     private Button addToFavoritesButton; // Add this for favorite button
+    private RecyclerView ingredientsRecyclerView;
+    private IngredientsAdapter ingredientsAdapter;
 
+    private List<String> ingredients;
+    private List<String> measures;
     @SuppressLint("MissingInflatedId")
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         // Inflate the fragment layout
-        View view = inflater.inflate(R.layout.fragment_random_meal, container, false);
+        View view = inflater.inflate(R.layout.meal_details_fragment, container, false);
 
         // Initialize UI components
         mealNameTextView = view.findViewById(R.id.mealNameTextView);
@@ -48,9 +57,20 @@ public class RandomMealFragment extends Fragment implements RandomMealViewInterf
         mealImageView = view.findViewById(R.id.mealImageView);
         videoWebView = view.findViewById(R.id.mealVideoWebView);
         addToFavoritesButton = view.findViewById(R.id.addToFavoritesButton); // Initialize the button
+        ingredientsRecyclerView = view.findViewById(R.id.ingredientsRecyclerViewID); // Initialize RecyclerView
+
+        // Set up the RecyclerView
+       // int numberOfColumns = 3; // Define how many columns you want
+        //GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2, GridLayoutManager.HORIZONTAL, false);
+
+        //ingredientsRecyclerView.setLayoutManager(gridLayoutManager);
+        ingredientsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        ingredientsAdapter = new IngredientsAdapter(ingredients);
+        ingredientsRecyclerView.setAdapter(ingredientsAdapter);
 
         // Initialize the presenter
         randomMealPresenter = new RandomMealPresenter(this, MealRepository.getInstance(MealRemoteDataSource.getMealRemoteDataSourceInstance()));
+
 
         // Configure WebView settings
         WebSettings webSettings = videoWebView.getSettings();
@@ -78,6 +98,11 @@ public class RandomMealFragment extends Fragment implements RandomMealViewInterf
             mealNameTextView.setText(meal.strMeal);
             mealInstructionsTextView.setText(meal.strInstructions);
             Glide.with(requireContext()).load(meal.strMealThumb).into(mealImageView);
+
+            ingredients=meal.getIngredients();
+            measures=meal.getMeasures();
+            ingredientsAdapter.setList(ingredients,measures);
+
 
             // Check if a YouTube video URL is provided and display it in WebView
             if (meal.strYoutube != null && !meal.strYoutube.isEmpty()) {

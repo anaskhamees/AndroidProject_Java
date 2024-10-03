@@ -1,5 +1,7 @@
 package com.example.foodplanner.Model;
 
+import java.util.ArrayList;
+
 public class MealPojo {
     public String idMeal;
     public String strMeal;
@@ -105,6 +107,7 @@ public class MealPojo {
         this.strMeasure18 = strMeasure18;
         this.strMeasure19 = strMeasure19;
         this.strMeasure20 = strMeasure20;
+
         this.strSource = strSource;
         this.strImageSource = strImageSource;
         this.strCreativeCommonsConfirmed = strCreativeCommonsConfirmed;
@@ -593,5 +596,136 @@ public class MealPojo {
 
     public void setStrImageSource(Object strImageSource) {
         this.strImageSource = strImageSource;
+    }
+
+    /* For get The measures of Ingriendents */
+
+    public ArrayList<String> getIngredients() {
+        ArrayList<String> ingredients = new ArrayList<>();
+        if (getStrIngredient1() != null && !getStrIngredient1().equals("")) {
+            ingredients.add(getStrIngredient1());
+        }
+        if (getStrIngredient2() != null && !getStrIngredient2().equals("")) {
+            ingredients.add(getStrIngredient2());
+        }
+        if (getStrIngredient3() != null && !getStrIngredient3().equals("")) {
+            ingredients.add(getStrIngredient3());
+        }
+        if (getStrIngredient4() != null && !getStrIngredient4().equals("")) {
+            ingredients.add(getStrIngredient4());
+        }
+        if (getStrIngredient5() != null && !getStrIngredient5().equals("")) {
+            ingredients.add(getStrIngredient5());
+        }
+        if (getStrIngredient6() != null && !getStrIngredient6().equals("")) {
+            ingredients.add(getStrIngredient6());
+        }
+        if (getStrIngredient7() != null && !getStrIngredient7().equals("")) {
+            ingredients.add(getStrIngredient7());
+        }
+        if (getStrIngredient8() != null && !getStrIngredient8().equals("")) {
+            ingredients.add(getStrIngredient8());
+        }
+        if (getStrIngredient9() != null && !getStrIngredient9().equals("")) {
+            ingredients.add(getStrIngredient9());
+        }
+        if (getStrIngredient10() != null && !getStrIngredient10().equals("")) {
+            ingredients.add(getStrIngredient10());
+        }
+        if (getStrIngredient11() != null && !getStrIngredient11().equals("")) {
+            ingredients.add(getStrIngredient11());
+        }
+        if (getStrIngredient12() != null && !getStrIngredient12().equals("")) {
+            ingredients.add(getStrIngredient12());
+        }
+        if (getStrIngredient13() != null && !getStrIngredient13().equals("")) {
+            ingredients.add(getStrIngredient13());
+        }
+        if (getStrIngredient14() != null && !getStrIngredient14().equals("")) {
+            ingredients.add(getStrIngredient14());
+        }
+        if (getStrIngredient15() != null && !getStrIngredient15().equals("")) {
+            ingredients.add(getStrIngredient15());
+        }
+        if (getStrIngredient16() != null && !getStrIngredient16().equals("")) {
+            ingredients.add(getStrIngredient16());
+        }
+        if (getStrIngredient17() != null && !getStrIngredient17().equals("")) {
+            ingredients.add(getStrIngredient17());
+        }
+        if (getStrIngredient18() != null && !getStrIngredient18().equals("")) {
+            ingredients.add(getStrIngredient18());
+        }
+        if (getStrIngredient19() != null && !getStrIngredient19().equals("")) {
+            ingredients.add(getStrIngredient19());
+        }
+        if (getStrIngredient20() != null && !getStrIngredient20().equals("")) {
+            ingredients.add(getStrIngredient20());
+        }
+        return ingredients;
+    }
+    public ArrayList<String> getMeasures() {
+        ArrayList<String> Measures = new ArrayList<>();
+        if (getStrMeasure1() != null && !getStrMeasure1().equals("")) {
+            Measures.add(getStrMeasure1());
+        }
+        if (getStrMeasure2() != null && !getStrMeasure2().equals("")) {
+            Measures.add(getStrMeasure2());
+        }
+        if (getStrMeasure3() != null && !getStrMeasure3().equals("")) {
+            Measures.add(getStrMeasure3());
+        }
+        if (getStrMeasure4() != null && !getStrMeasure4().equals("")) {
+            Measures.add(getStrMeasure4());
+        }
+        if (getStrMeasure5() != null && !getStrMeasure5().equals("")) {
+            Measures.add(getStrMeasure5());
+        }
+        if (getStrMeasure6() != null && !getStrMeasure6().equals("")) {
+            Measures.add(getStrMeasure6());
+        }
+        if (getStrMeasure7() != null && !getStrMeasure7().equals("")) {
+            Measures.add(getStrMeasure7());
+        }
+        if (getStrMeasure8() != null && !getStrMeasure8().equals("")) {
+            Measures.add(getStrMeasure8());
+        }
+        if (getStrMeasure9() != null && !getStrMeasure9().equals("")) {
+            Measures.add(getStrMeasure9());
+        }
+        if (getStrMeasure10() != null && !getStrMeasure10().equals("")) {
+            Measures.add(getStrMeasure10());
+        }
+        if (getStrMeasure11() != null && !getStrMeasure11().equals("")) {
+            Measures.add(getStrMeasure11());
+        }
+        if (getStrMeasure12() != null && !getStrMeasure12().equals("")) {
+            Measures.add(getStrMeasure12());
+        }
+        if (getStrMeasure13() != null && !getStrMeasure13().equals("")) {
+            Measures.add(getStrMeasure13());
+        }
+        if (getStrMeasure14() != null && !getStrMeasure14().equals("")) {
+            Measures.add(getStrMeasure14());
+        }
+        if (getStrMeasure15() != null && !getStrMeasure15().equals("")) {
+            Measures.add(getStrMeasure15());
+        }
+        if (getStrMeasure16() != null && !getStrMeasure16().equals("")) {
+            Measures.add(getStrMeasure16());
+        }
+        if (getStrMeasure17() != null && !getStrMeasure17().equals("")) {
+            Measures.add(getStrMeasure17());
+        }
+        if (getStrMeasure18() != null && !getStrMeasure18().equals("")) {
+            Measures.add(getStrMeasure18());
+        }
+        if (getStrMeasure19() != null && !getStrMeasure19().equals("")) {
+            Measures.add(getStrMeasure19());
+        }
+        if (getStrMeasure20() != null && !getStrMeasure20().equals("")) {
+            Measures.add(getStrMeasure20());
+        }
+        return Measures;
     }
 }
