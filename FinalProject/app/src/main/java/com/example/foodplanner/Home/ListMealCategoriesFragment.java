@@ -14,6 +14,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.foodplanner.Home.Countries.View.CountriesFragment;
 import com.example.foodplanner.R;
 import com.example.foodplanner.Home.Categories.View.CategoriesFragment;  // Import your CategoriesFragment
+import com.example.foodplanner.RandomMealFeature.View.RandomMealFragment;
 
 public class ListMealCategoriesFragment extends Fragment {
 
@@ -35,6 +36,11 @@ public class ListMealCategoriesFragment extends Fragment {
 
         });
 
+        view.findViewById(R.id.randomMealImage).setOnClickListener(v -> {
+            showToast("Arbitrary Meal");
+            openRandomMealFragment();
+
+        });
 
         view.findViewById(R.id.ingredientsImage).setOnClickListener(v -> showToast("Ingredients"));
 
@@ -73,6 +79,24 @@ public class ListMealCategoriesFragment extends Fragment {
 
         // Replace the current fragment with CategoriesFragment
         fragmentTransaction.replace(R.id.fragmentContainerID, countriesFragment);
+
+        // Optionally, add the transaction to the back stack if you want to allow back navigation
+        fragmentTransaction.addToBackStack(null);
+
+        // Commit the transaction
+        fragmentTransaction.commit();
+    }
+
+    private void openRandomMealFragment() {
+        // Create an instance of CategoriesFragment
+        RandomMealFragment randomMealFragment = new RandomMealFragment();
+
+        // Get FragmentManager and start a transaction
+        FragmentManager fragmentManager = getParentFragmentManager();  // Use getParentFragmentManager() instead of getFragmentManager()
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+        // Replace the current fragment with CategoriesFragment
+        fragmentTransaction.replace(R.id.fragmentContainerID, randomMealFragment);
 
         // Optionally, add the transaction to the back stack if you want to allow back navigation
         fragmentTransaction.addToBackStack(null);

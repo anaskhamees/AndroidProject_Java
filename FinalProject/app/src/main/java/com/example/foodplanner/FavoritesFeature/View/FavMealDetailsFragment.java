@@ -1,4 +1,4 @@
-package com.example.foodplanner.MealDetails.View;
+package com.example.foodplanner.FavoritesFeature.View;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -14,6 +14,8 @@ import android.widget.Toast;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -22,42 +24,47 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.foodplanner.DataBase.MealLocalDataSource;
+import com.example.foodplanner.FavoritesFeature.Presenter.FavPresenter;
 import com.example.foodplanner.MealDetails.Presenter.MealDetailsPresenter;
+import com.example.foodplanner.MealDetails.View.MealDetailsViewInterface;
 import com.example.foodplanner.R;
 import com.example.foodplanner.Model.MealPojo;
 import com.example.foodplanner.RandomMealFeature.View.IngredientsAdapter;
 import com.example.foodplanner.Repository.MealRepository;
 import com.example.foodplanner.NetworkPkg.MealRemoteDataSource;
 import com.example.foodplanner.RandomMealFeature.Presenter.RandomMealPresenter;
+import com.google.android.gms.common.SignInButton;
 
 import java.util.List;
 
-public class MealDetailsFragment extends Fragment implements MealDetailsViewInterface {
+public class FavMealDetailsFragment extends Fragment implements FavViewInterface,FavOnMealClick {
 
-    private MealDetailsPresenter mealDetailsPresenter;
+    private FavPresenter favMetailsPresenter;
     private TextView mealNameTextView;
     private TextView mealInstructionsTextView;
     private ImageView mealImageView;
     private WebView videoWebView;
-    private Button addToFavoritesButton; // Add this for favorite button
+    private Button removeFromFavoritesButton; // Add this for favorite button
     private RecyclerView ingredientsRecyclerView;
     private IngredientsAdapter ingredients_Adapter;
     MealPojo meal;
     private List<String> ingredients;
     private List<String> measures;
+
+    //public static FavMealDetailsFragment getInstance(MealPojo meal)
     @SuppressLint("MissingInflatedId")
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         // Inflate the fragment layout
-        View view = inflater.inflate(R.layout.meal_details_fragment, container, false);
+        View view = inflater.inflate(R.layout.fav_meal_details, container, false);
 
         // Initialize UI components
         mealNameTextView = view.findViewById(R.id.mealNameTextView);
         mealInstructionsTextView = view.findViewById(R.id.mealInstructionsTextView);
         mealImageView = view.findViewById(R.id.mealImageView);
         videoWebView = view.findViewById(R.id.mealVideoWebView);
-        addToFavoritesButton = view.findViewById(R.id.addToFavoritesButton); // Initialize the button
+        removeFromFavoritesButton = view.findViewById(R.id.removeFromFavoritesButton); // Initialize the button
         ingredientsRecyclerView = view.findViewById(R.id.ingredientsRecyclerViewID); // Initialize RecyclerView
 
         // Set up the RecyclerView
@@ -70,7 +77,14 @@ public class MealDetailsFragment extends Fragment implements MealDetailsViewInte
         ingredientsRecyclerView.setAdapter(ingredients_Adapter);
 
         // Initialize the presenter
-        mealDetailsPresenter = new MealDetailsPresenter(this,MealRepository.getInstance(MealRemoteDataSource.getMealRemoteDataSourceInstance(), MealLocalDataSource.getInstance(getContext())));
+        favMetailsPresenter = new FavPresenter(this,MealRepository.getInstance(MealRemoteDataSource.getMealRemoteDataSourceInstance(), MealLocalDataSource.getInstance(getContext())));
+        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                // Pop the current fragment and go back to the previous one (FavoritesFragment)
+                getParentFragmentManager().popBackStack();
+            }
+        });
 
 
         // Configure WebView settings
@@ -78,25 +92,31 @@ public class MealDetailsFragment extends Fragment implements MealDetailsViewInte
         webSettings.setJavaScriptEnabled(true);  // Enable JavaScript for YouTube video playback
         videoWebView.setWebViewClient(new WebViewClient());  // Ensure the video opens within the WebView
 
-        String mealName = getArguments().getString("MEAL_NAME");
+        if(getArguments()!=null)
+        {
+            meal=(MealPojo) getArguments().getSerializable("meal");
+        }
         // get the random meal data
-        mealDetailsPresenter.getMealDetails(mealName);
-
+       favMetailsPresenter.getFavMeals(getViewLifecycleOwner());
         // Handle Add to Favorite button click
-        addToFavoritesButton.setOnClickListener(v -> {
-            // Assuming mealNameTextView contains the current meal name or you can pass meal directly
-            mealDetailsPresenter.addMealToFavorites(meal);
-            Toast.makeText(getContext(), mealName + " added to Favorites!", Toast.LENGTH_SHORT).show();
+        removeFromFavoritesButton.setOnClickListener(v -> {
+            // Call the presenter method to remove the meal from favorites
+            if (meal != null) {
+                favMetailsPresenter.removeMealFromFav(meal);
+                Toast.makeText(getContext(), meal.getStrMeal()+" Removed from Favorites", Toast.LENGTH_SHORT).show();
+                getParentFragmentManager().popBackStack();  // This will navigate back to the previous fragment
 
+            } else {
+                Toast.makeText(getContext(), "No meal to remove", Toast.LENGTH_SHORT).show();
+            }
         });
-
         return view;
     }
 
     @Override
-    public void displayMealDetails(List<MealPojo> mealList) {
+    public void displayFavMeals(List<MealPojo> mealList) {
         if (mealList != null && !mealList.isEmpty()) {
-             meal = mealList.get(0);
+            //meal = mealList.get(0);
 
             mealNameTextView.setText(meal.strMeal);
             mealInstructionsTextView.setText(meal.strInstructions);
@@ -135,9 +155,15 @@ public class MealDetailsFragment extends Fragment implements MealDetailsViewInte
     }*/
 
 
+
     @Override
     public void displayError(String errorMessage) {
         Log.e("RandomMealFragment", "Error: " + errorMessage);
         Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onMealClick(MealPojo meal) {
+
     }
 }

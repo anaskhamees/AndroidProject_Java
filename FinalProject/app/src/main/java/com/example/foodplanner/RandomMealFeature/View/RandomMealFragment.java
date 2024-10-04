@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.foodplanner.DataBase.MealLocalDataSource;
 import com.example.foodplanner.R;
 import com.example.foodplanner.Model.MealPojo;
 import com.example.foodplanner.Repository.MealRepository;
@@ -69,7 +70,7 @@ public class RandomMealFragment extends Fragment implements RandomMealViewInterf
         ingredientsRecyclerView.setAdapter(ingredientsAdapter);
 
         // Initialize the presenter
-        randomMealPresenter = new RandomMealPresenter(this, MealRepository.getInstance(MealRemoteDataSource.getMealRemoteDataSourceInstance()));
+        randomMealPresenter = new RandomMealPresenter(this, MealRepository.getInstance(MealRemoteDataSource.getMealRemoteDataSourceInstance(), MealLocalDataSource.getInstance(getContext())));
 
 
         // Configure WebView settings
@@ -80,12 +81,6 @@ public class RandomMealFragment extends Fragment implements RandomMealViewInterf
         // get the random meal data
         randomMealPresenter.getRandomMeal();
 
-        // Handle Add to Favorite button click
-        addToFavoritesButton.setOnClickListener(v -> {
-            // Assuming mealNameTextView contains the current meal name or you can pass meal directly
-            String mealName = mealNameTextView.getText().toString();
-            addMealToFavorites(mealName);
-        });
 
         return view;
     }
@@ -94,6 +89,14 @@ public class RandomMealFragment extends Fragment implements RandomMealViewInterf
     public void displayRandomMeal(List<MealPojo> mealList) {
         if (mealList != null && !mealList.isEmpty()) {
             MealPojo meal = mealList.get(0);
+            // Handle Add to Favorite button click
+            addToFavoritesButton.setOnClickListener(v -> {
+                // Assuming mealNameTextView contains the current meal name or you can pass meal directly
+                String mealName = mealNameTextView.getText().toString();
+                randomMealPresenter.addMealToFavorites(meal);
+                Toast.makeText(getContext(), mealName + " added to Favorites !", Toast.LENGTH_SHORT).show();
+
+            });
 
             mealNameTextView.setText(meal.strMeal);
             mealInstructionsTextView.setText(meal.strInstructions);
@@ -118,7 +121,6 @@ public class RandomMealFragment extends Fragment implements RandomMealViewInterf
                 Log.i("Video", "displayRandomMeal: No Video Available");
             }
             // You could pass the meal object for favorites functionality
-            addToFavoritesButton.setOnClickListener(v -> addMealToFavorites(meal.strMeal));
         } else {
             Log.i("RandomMealFragment", "Meal list is empty or null");
             displayError("No meals available");
@@ -126,10 +128,7 @@ public class RandomMealFragment extends Fragment implements RandomMealViewInterf
     }
 
     // Handle Add to Favorites logic
-    private void addMealToFavorites(String mealName) {
         // Add your logic to store this meal to favorites (e.g., in a database or shared preferences)
-        Toast.makeText(getContext(), mealName + " added to Favorites!", Toast.LENGTH_SHORT).show();
-    }
 
     @Override
     public void displayError(String errorMessage) {

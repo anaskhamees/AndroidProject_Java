@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
                 if (item.getItemId() == R.id.nav_homeID) {
                     selectedFragment = new ListMealCategoriesFragment();
-                } else if (item.getItemId() == R.id.nav_random_mealID) {
+                } else if (item.getItemId() == R.id.calendarMealID) {
                     selectedFragment = new RandomMealFragment();
                 } else if (item.getItemId() == R.id.nav_search_mealID) {
                     selectedFragment = new SearchFragment();

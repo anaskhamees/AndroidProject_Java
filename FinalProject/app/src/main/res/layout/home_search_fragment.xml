@@ -33,6 +33,42 @@
             android:shadowDy="2"
             android:padding="8dp" />
 
+        <!-- Card 1: Random meal -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginBottom="16dp"
+            card_view:cardCornerRadius="8dp"
+            card_view:cardElevation="6dp"
+            android:onClick="onCardClick">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/randomMealImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/random" />
+
+                <TextView
+                    android:id="@+id/randomMealName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:padding="8dp"
+                    android:text="Arbitrary Meal"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:textSize="26sp"
+                    android:background="@drawable/text_bg" />
+
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+
         <!-- Card 1: Categories -->
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"

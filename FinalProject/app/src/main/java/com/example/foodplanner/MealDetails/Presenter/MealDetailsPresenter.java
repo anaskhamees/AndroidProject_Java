@@ -22,6 +22,11 @@ public class MealDetailsPresenter implements MealDetailsPresenterInterface, Netw
 
         mealDetailsRepo.fetchMealByName(this,name);
     }
+    public void addMealToFavorites(MealPojo meal)
+    {
+        mealDetailsRepo.addMealToFav(meal);
+    }
+
     @Override
     public void onSuccessfulResult(List<MealPojo> meal) {
         MealDetailsIview.displayMealDetails(meal);

@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.foodplanner.DataBase.MealLocalDataSource;
 import com.example.foodplanner.Model.MealPojo;
 import com.example.foodplanner.NetworkPkg.MealRemoteDataSource;
 import com.example.foodplanner.R;
@@ -52,7 +53,7 @@ public class CountriesFragment extends Fragment implements CountriesViewInterfac
         recyclerView.setAdapter(countriesAdapter);
 
         // Initialize the presenter and fetch countries
-        countryPresenter = new CountriesPresenter(MealRepository.getInstance(MealRemoteDataSource.getMealRemoteDataSourceInstance()),this);
+        countryPresenter = new CountriesPresenter(MealRepository.getInstance(MealRemoteDataSource.getMealRemoteDataSourceInstance(), MealLocalDataSource.getInstance(getContext())),this);
         countryPresenter.getCountries();
     }
 

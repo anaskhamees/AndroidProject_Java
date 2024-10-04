@@ -1,16 +1,25 @@
 package com.example.foodplanner.Model;
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class MealPojo {
-    public String idMeal;
+@Entity(tableName = "meal_table")
+public class MealPojo implements Serializable {
+    @NonNull
+    @PrimaryKey
     public String strMeal;
-    public Object strDrinkAlternate;
+    public String idMeal;
+
+   // public Object strDrinkAlternate;
     public String strCategory;
     public String strArea;
     public String strInstructions;
     public String strMealThumb;
-    public Object strTags;
+    //public Object strTags;
     public String strYoutube;
     public String strIngredient1;
     public String strIngredient2;
@@ -53,67 +62,6 @@ public class MealPojo {
     public String strMeasure19;
     public String strMeasure20;
     public String strSource;
-    public Object strImageSource;
-    public Object strCreativeCommonsConfirmed;
-    public Object dateModified;
-
-    public MealPojo(String idMeal, String strMeal, Object strDrinkAlternate, String strCategory, String strArea, String strInstructions, String strMealThumb, Object strTags, String strYoutube, String strIngredient1, String strIngredient2, String strIngredient3, String strIngredient4, String strIngredient5, String strIngredient6, String strIngredient7, String strIngredient8, String strIngredient9, String strIngredient10, String strIngredient11, String strIngredient12, String strIngredient13, String strIngredient14, String strIngredient15, String strIngredient16, String strIngredient17, String strIngredient18, String strIngredient19, String strIngredient20, String strMeasure1, String strMeasure2, String strMeasure4, String strMeasure3, String strMeasure5, String strMeasure6, String strMeasure7, String strMeasure8, String strMeasure9, String strMeasure10, String strMeasure12, String strMeasure11, String strMeasure13, String strMeasure14, String strMeasure15, String strMeasure16, String strMeasure17, String strMeasure18, String strMeasure19, String strMeasure20, String strSource, Object strImageSource, Object strCreativeCommonsConfirmed, Object dateModified) {
-        this.idMeal = idMeal;
-        this.strMeal = strMeal;
-        this.strDrinkAlternate = strDrinkAlternate;
-        this.strCategory = strCategory;
-        this.strArea = strArea;
-        this.strInstructions = strInstructions;
-        this.strMealThumb = strMealThumb;
-        this.strTags = strTags;
-        this.strYoutube = strYoutube;
-        this.strIngredient1 = strIngredient1;
-        this.strIngredient2 = strIngredient2;
-        this.strIngredient3 = strIngredient3;
-        this.strIngredient4 = strIngredient4;
-        this.strIngredient5 = strIngredient5;
-        this.strIngredient6 = strIngredient6;
-        this.strIngredient7 = strIngredient7;
-        this.strIngredient8 = strIngredient8;
-        this.strIngredient9 = strIngredient9;
-        this.strIngredient10 = strIngredient10;
-        this.strIngredient11 = strIngredient11;
-        this.strIngredient12 = strIngredient12;
-        this.strIngredient13 = strIngredient13;
-        this.strIngredient14 = strIngredient14;
-        this.strIngredient15 = strIngredient15;
-        this.strIngredient16 = strIngredient16;
-        this.strIngredient17 = strIngredient17;
-        this.strIngredient18 = strIngredient18;
-        this.strIngredient19 = strIngredient19;
-        this.strIngredient20 = strIngredient20;
-        this.strMeasure1 = strMeasure1;
-        this.strMeasure2 = strMeasure2;
-        this.strMeasure4 = strMeasure4;
-        this.strMeasure3 = strMeasure3;
-        this.strMeasure5 = strMeasure5;
-        this.strMeasure6 = strMeasure6;
-        this.strMeasure7 = strMeasure7;
-        this.strMeasure8 = strMeasure8;
-        this.strMeasure9 = strMeasure9;
-        this.strMeasure10 = strMeasure10;
-        this.strMeasure12 = strMeasure12;
-        this.strMeasure11 = strMeasure11;
-        this.strMeasure13 = strMeasure13;
-        this.strMeasure14 = strMeasure14;
-        this.strMeasure15 = strMeasure15;
-        this.strMeasure16 = strMeasure16;
-        this.strMeasure17 = strMeasure17;
-        this.strMeasure18 = strMeasure18;
-        this.strMeasure19 = strMeasure19;
-        this.strMeasure20 = strMeasure20;
-
-        this.strSource = strSource;
-        this.strImageSource = strImageSource;
-        this.strCreativeCommonsConfirmed = strCreativeCommonsConfirmed;
-        this.dateModified = dateModified;
-    }
-
 
     public String getIdMeal() {
         return idMeal;
@@ -129,14 +77,6 @@ public class MealPojo {
 
     public void setStrMeal(String strMeal) {
         this.strMeal = strMeal;
-    }
-
-    public Object getStrDrinkAlternate() {
-        return strDrinkAlternate;
-    }
-
-    public void setStrDrinkAlternate(Object strDrinkAlternate) {
-        this.strDrinkAlternate = strDrinkAlternate;
     }
 
     public String getStrCategory() {
@@ -245,13 +185,6 @@ public class MealPojo {
             default:
                 return ""; // Default case for unmapped countries
         }
-    }
-    public Object getStrTags() {
-        return strTags;
-    }
-
-    public void setStrTags(Object strTags) {
-        this.strTags = strTags;
     }
 
     public String getStrYoutube() {
@@ -589,14 +522,14 @@ public class MealPojo {
     public void setStrSource(String strSource) {
         this.strSource = strSource;
     }
-
-    public Object getStrImageSource() {
-        return strImageSource;
-    }
-
-    public void setStrImageSource(Object strImageSource) {
-        this.strImageSource = strImageSource;
-    }
+//
+//    public Object getStrImageSource() {
+//        return strImageSource;
+//    }
+//
+//    public void setStrImageSource(Object strImageSource) {
+//        this.strImageSource = strImageSource;
+//    }
 
     /* For get The measures of Ingriendents */
 

@@ -22,6 +22,11 @@ public class RandomMealPresenter implements RandomMealPresenterInterface, Networ
 
         randomMealRepo.fetchRandomMeal(this);
     }
+    public void addMealToFavorites(MealPojo meal)
+    {
+        randomMealRepo.addMealToFav(meal);
+    }
+
     @Override
     public void onSuccessfulResult(List<MealPojo> randomMeal) {
         randomMealIview.displayRandomMeal(randomMeal);

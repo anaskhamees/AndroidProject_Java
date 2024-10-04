@@ -12,6 +12,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.foodplanner.DataBase.MealLocalDataBaseInterface;
+import com.example.foodplanner.DataBase.MealLocalDataSource;
 import com.example.foodplanner.Home.Categories.CategoriesMeals.Presenter.MealsFilteredByCategoryPresenter;
 import com.example.foodplanner.NetworkPkg.MealRemoteDataSource;
 import com.example.foodplanner.R;
@@ -52,7 +54,7 @@ public class CategoriesFragment extends Fragment implements CategoriesViewInterf
         recyclerView.setAdapter(categoryAdapter);
        // categoryAdapter.setOnCategoryClickListener(this);
         // Fetch categories
-        categoryPresenter = new CategoryPresenter(this, MealRepository.getInstance(MealRemoteDataSource.getMealRemoteDataSourceInstance()));
+        categoryPresenter = new CategoryPresenter(this, MealRepository.getInstance(MealRemoteDataSource.getMealRemoteDataSourceInstance(), MealLocalDataSource.getInstance(getContext())));
         categoryPresenter.getCategories();
     }
 

@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.foodplanner.DataBase.MealLocalDataSource;
 import com.example.foodplanner.Home.Categories.CategoriesMeals.Presenter.MealsFilteredByCategoryPresenter;
 import com.example.foodplanner.Model.MealPojo;
 import com.example.foodplanner.NetworkPkg.MealRemoteDataSource;
@@ -53,7 +54,7 @@ public class CategoriesMealsFragment extends Fragment implements MealsFilteredBy
 
         // Fetch meals by category (pass category name from the adapter or an activity)
         String selectedCategory = getArguments().getString("CATEGORY_NAME");
-        mealsPresenter = new MealsFilteredByCategoryPresenter(MealRepository.getInstance(MealRemoteDataSource.getMealRemoteDataSourceInstance()), this);
+        mealsPresenter = new MealsFilteredByCategoryPresenter(MealRepository.getInstance(MealRemoteDataSource.getMealRemoteDataSourceInstance(), MealLocalDataSource.getInstance(getContext())), this);
         mealsPresenter.getMealsFilteredByCategory(selectedCategory);
     }
 
