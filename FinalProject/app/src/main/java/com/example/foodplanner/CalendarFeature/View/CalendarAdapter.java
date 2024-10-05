@@ -38,7 +38,6 @@ private OnPlannedClickListener plannedOnClickListener;
             this.plannedMeals=UpdatedPlannedMeals;
         }
         else {
-
             Toast.makeText(context, "No Meals Scheduled in this date", Toast.LENGTH_SHORT).show();
         }
     }

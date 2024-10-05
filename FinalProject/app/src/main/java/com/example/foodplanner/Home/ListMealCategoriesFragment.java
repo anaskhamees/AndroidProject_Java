@@ -26,18 +26,18 @@ public class ListMealCategoriesFragment extends Fragment {
 
         // Set onClickListener for the Cards
         view.findViewById(R.id.categoriesImage).setOnClickListener(v -> {
-            showToast("Categories");
+           // showToast("Categories");
             openCategoriesFragment();  // Call method to switch to CategoriesFragment
         });
 
         view.findViewById(R.id.countriesImage).setOnClickListener(v -> {
-            showToast("Countries");
+           // showToast("Countries");
             openCountriesFragment();
 
         });
 
         view.findViewById(R.id.randomMealImage).setOnClickListener(v -> {
-            showToast("Arbitrary Meal");
+          //  showToast("Arbitrary Meal");
             openRandomMealFragment();
 
         });

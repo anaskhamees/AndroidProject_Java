@@ -38,10 +38,10 @@ public class MainActivity extends AppCompatActivity {
                     selectedFragment = new CalendarFragment();
                 } else if (item.getItemId() == R.id.nav_search_mealID) {
                     selectedFragment = new SearchFragment();
-                    Toast.makeText(MainActivity.this, "Search for Meals", Toast.LENGTH_LONG).show();
+                  //  Toast.makeText(MainActivity.this, "Search for Meals", Toast.LENGTH_LONG).show();
                 } else if (item.getItemId() == R.id.nav_favoritesID) {
                     selectedFragment = new FavoritesFragment();
-                    Toast.makeText(MainActivity.this, "Favorite Meals", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(MainActivity.this, "Favorite Meals", Toast.LENGTH_LONG).show();
                  }
 
                 return loadFragment(selectedFragment);

@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -98,6 +99,7 @@ public class CalendarFragment extends Fragment implements CalendarViewInterface,
 
     @Override
     public void displayPlannedMeals(List<MealPojoPlan> mealList) {
+
         calendarAdapter.setList(mealList);
         calendarAdapter.notifyDataSetChanged();
 
@@ -110,6 +112,13 @@ public class CalendarFragment extends Fragment implements CalendarViewInterface,
 
     @Override
     public void onPlannedMealClick(MealPojoPlan meal) {
-
+        CalendarMealDetailsFragment fragment = new CalendarMealDetailsFragment(); // Create instance of MealDetailsFragment
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("meal", meal); // Pass the entire meal object
+        fragment.setArguments(bundle); // Set arguments
+        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragmentContainerID, fragment); // Replace with MealDetailsFragment
+        transaction.addToBackStack(null); // Add to back stack
+        transaction.commit(); // Commit the transaction
     }
 }

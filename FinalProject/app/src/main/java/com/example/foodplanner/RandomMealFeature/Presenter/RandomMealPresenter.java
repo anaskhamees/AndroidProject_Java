@@ -2,6 +2,7 @@ package com.example.foodplanner.RandomMealFeature.Presenter;
 
 
 import com.example.foodplanner.Model.MealPojo;
+import com.example.foodplanner.Model.MealPojoPlan;
 import com.example.foodplanner.Repository.MealRepository;
 import com.example.foodplanner.NetworkPkg.NetworkCallBackInterface;
 import com.example.foodplanner.RandomMealFeature.View.RandomMealViewInterface;
@@ -37,6 +38,12 @@ public class RandomMealPresenter implements RandomMealPresenterInterface, Networ
         randomMealIview.displayError(errMsg);
 
     }
+
+    public void addMealToCalendar(MealPojoPlan plannedMeal)
+    {
+        randomMealRepo.insertPlannedMeal(plannedMeal);
+    }
+
 
 
 }

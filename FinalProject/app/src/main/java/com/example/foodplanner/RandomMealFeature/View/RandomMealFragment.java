@@ -23,6 +23,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.foodplanner.DataBase.MealLocalDataSource;
+import com.example.foodplanner.MealDetails.View.MealCalendarFragment;
+import com.example.foodplanner.Model.Converter;
+import com.example.foodplanner.Model.MealPojoPlan;
 import com.example.foodplanner.R;
 import com.example.foodplanner.Model.MealPojo;
 import com.example.foodplanner.Repository.MealRepository;
@@ -42,7 +45,9 @@ public class RandomMealFragment extends Fragment implements RandomMealViewInterf
     private Button addToFavoritesButton; // Add this for favorite button
     private RecyclerView ingredientsRecyclerView;
     private IngredientsAdapter ingredientsAdapter;
-
+    private Button addToCalendarButton; // Add this for favorite button
+    MealPojoPlan plannedMeal;
+    MealPojo meal;
     private List<String> ingredients;
     private List<String> measures;
     @SuppressLint("MissingInflatedId")
@@ -58,11 +63,8 @@ public class RandomMealFragment extends Fragment implements RandomMealViewInterf
         mealImageView = view.findViewById(R.id.mealImageView);
         videoWebView = view.findViewById(R.id.mealVideoWebView);
         addToFavoritesButton = view.findViewById(R.id.addToFavoritesButton); // Initialize the button
+        addToCalendarButton=view.findViewById(R.id.addToCalendarButton);
         ingredientsRecyclerView = view.findViewById(R.id.ingredientsRecyclerViewID); // Initialize RecyclerView
-
-        // Set up the RecyclerView
-       // int numberOfColumns = 3; // Define how many columns you want
-        //GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2, GridLayoutManager.HORIZONTAL, false);
 
         //ingredientsRecyclerView.setLayoutManager(gridLayoutManager);
         ingredientsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
@@ -81,14 +83,13 @@ public class RandomMealFragment extends Fragment implements RandomMealViewInterf
         // get the random meal data
         randomMealPresenter.getRandomMeal();
 
-
         return view;
     }
 
     @Override
     public void displayRandomMeal(List<MealPojo> mealList) {
         if (mealList != null && !mealList.isEmpty()) {
-            MealPojo meal = mealList.get(0);
+             meal = mealList.get(0);
             // Handle Add to Favorite button click
             addToFavoritesButton.setOnClickListener(v -> {
                 // Assuming mealNameTextView contains the current meal name or you can pass meal directly
@@ -97,6 +98,21 @@ public class RandomMealFragment extends Fragment implements RandomMealViewInterf
                 Toast.makeText(getContext(), mealName + " added to Favorites !", Toast.LENGTH_SHORT).show();
 
             });
+            addToCalendarButton.setOnClickListener(v->{
+                MealCalendarFragment dialogFragment=new MealCalendarFragment();
+                dialogFragment.setOnDateSelectedListener(selectedDate ->{
+                    Toast.makeText(getContext(), "Selected date: " + selectedDate, Toast.LENGTH_SHORT).show();
+                    plannedMeal= Converter.convertToMealPojoPlan(meal,selectedDate);
+                    randomMealPresenter.addMealToCalendar(plannedMeal);
+
+                });
+
+                // Toast.makeText(getContext(), mealName + " added to Calendar !", Toast.LENGTH_SHORT).show();
+                dialogFragment.show(getParentFragmentManager(), "calendarDialog");
+
+            });
+
+
 
             mealNameTextView.setText(meal.strMeal);
             mealInstructionsTextView.setText(meal.strInstructions);
