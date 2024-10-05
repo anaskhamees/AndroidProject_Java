@@ -21,8 +21,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.foodplanner.CalendarFeature.View.CalendarFragment;
 import com.example.foodplanner.DataBase.MealLocalDataSource;
 import com.example.foodplanner.MealDetails.Presenter.MealDetailsPresenter;
+import com.example.foodplanner.Model.Converter;
+import com.example.foodplanner.Model.MealPojoPlan;
 import com.example.foodplanner.R;
 import com.example.foodplanner.Model.MealPojo;
 import com.example.foodplanner.RandomMealFeature.View.IngredientsAdapter;
@@ -40,9 +43,13 @@ public class MealDetailsFragment extends Fragment implements MealDetailsViewInte
     private ImageView mealImageView;
     private WebView videoWebView;
     private Button addToFavoritesButton; // Add this for favorite button
+    private Button addToCalendarButton; // Add this for favorite button
+
+    private String selectedDate;
     private RecyclerView ingredientsRecyclerView;
     private IngredientsAdapter ingredients_Adapter;
     MealPojo meal;
+    MealPojoPlan plannedMeal;
     private List<String> ingredients;
     private List<String> measures;
     @SuppressLint("MissingInflatedId")
@@ -58,6 +65,7 @@ public class MealDetailsFragment extends Fragment implements MealDetailsViewInte
         mealImageView = view.findViewById(R.id.mealImageView);
         videoWebView = view.findViewById(R.id.mealVideoWebView);
         addToFavoritesButton = view.findViewById(R.id.addToFavoritesButton); // Initialize the button
+        addToCalendarButton=view.findViewById(R.id.addToCalendarButton);
         ingredientsRecyclerView = view.findViewById(R.id.ingredientsRecyclerViewID); // Initialize RecyclerView
 
         // Set up the RecyclerView
@@ -87,6 +95,20 @@ public class MealDetailsFragment extends Fragment implements MealDetailsViewInte
             // Assuming mealNameTextView contains the current meal name or you can pass meal directly
             mealDetailsPresenter.addMealToFavorites(meal);
             Toast.makeText(getContext(), mealName + " added to Favorites!", Toast.LENGTH_SHORT).show();
+
+        });
+
+        addToCalendarButton.setOnClickListener(v->{
+            MealCalendarFragment dialogFragment=new MealCalendarFragment();
+            dialogFragment.setOnDateSelectedListener(selectedDate ->{
+                Toast.makeText(getContext(), "Selected date: " + selectedDate, Toast.LENGTH_SHORT).show();
+                plannedMeal= Converter.convertToMealPojoPlan(meal,selectedDate);
+                mealDetailsPresenter.addMealToCalendar(plannedMeal);
+
+            });
+
+           // Toast.makeText(getContext(), mealName + " added to Calendar !", Toast.LENGTH_SHORT).show();
+            dialogFragment.show(getParentFragmentManager(), "calendarDialog");
 
         });
 

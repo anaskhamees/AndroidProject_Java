@@ -1,12 +1,12 @@
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/CardViewID"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="20dp"
-    android:layout_marginRight="65dp"
+    android:layout_marginLeft="40dp"
+    android:layout_marginRight="40dp"
     android:layout_marginBottom="20dp"
-    android:layout_marginTop="12dp"
+    android:layout_marginTop="8dp"
     app:cardCornerRadius="25dp"
     app:cardElevation="8dp">
 
@@ -33,10 +33,10 @@
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:layout_marginBottom="8dp"
-            android:scaleType="centerCrop"
             android:background="@drawable/rounded_corners"
             android:clipToOutline="true"
-            android:contentDescription="@string/meal_image" />
+            android:contentDescription="@string/meal_image"
+            android:scaleType="centerCrop" />
 
     </LinearLayout>
 </androidx.cardview.widget.CardView>

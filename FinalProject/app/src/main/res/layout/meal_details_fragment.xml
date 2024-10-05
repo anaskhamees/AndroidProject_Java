@@ -148,6 +148,16 @@
                 android:textColor="@color/black"
                 android:backgroundTint="#40E0D0" />
 
+            <!-- Add to Favorites Button -->
+            <Button
+                android:id="@+id/addToCalendarButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add to Calendar"
+                android:layout_marginTop="16dp"
+                android:textColor="@color/black"
+                android:backgroundTint="#40E0D0" />
+
         </LinearLayout>
     </ScrollView>
 

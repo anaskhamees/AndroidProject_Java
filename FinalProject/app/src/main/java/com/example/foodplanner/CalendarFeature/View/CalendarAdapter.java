@@ -1,67 +1,75 @@
-package com.example.foodplanner.FavoritesFeature.View;
+package com.example.foodplanner.CalendarFeature.View;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
-import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.foodplanner.Home.Countries.View.CountriesAdapter;
+import com.example.foodplanner.FavoritesFeature.View.FavAdapter;
 import com.example.foodplanner.Model.MealPojo;
+import com.example.foodplanner.Model.MealPojoPlan;
 import com.example.foodplanner.R;
 
 import java.util.List;
-
-public class FavAdapter extends RecyclerView.Adapter<FavAdapter.ViewHolder> {
-
+//
+public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHolder> {
     private Context context;
-    private List<MealPojo> meals;
-    private FavOnMealClick favOnMealClick;
+    private List<MealPojoPlan> plannedMeals;
+private OnPlannedClickListener plannedOnClickListener;
 
-    public FavAdapter(Context context, List<MealPojo> meals,FavOnMealClick favOnMealClick) {
+    public CalendarAdapter(Context context, List<MealPojoPlan> plannedMeals, OnPlannedClickListener listener) {
         this.context = context;
-        this.meals = meals;
-        this.favOnMealClick=favOnMealClick;
+        this.plannedMeals = plannedMeals;
+        this.plannedOnClickListener = listener;
     }
 
+    public void setList(List<MealPojoPlan> UpdatedPlannedMeals)
+    {
+        if(UpdatedPlannedMeals!=null || !(UpdatedPlannedMeals.isEmpty()))
+        {
+            this.plannedMeals=UpdatedPlannedMeals;
+        }
+        else {
+
+            Toast.makeText(context, "No Meals Scheduled in this date", Toast.LENGTH_SHORT).show();
+        }
+    }
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public CalendarAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.meal_name_img_cell, parent, false);
-        return new ViewHolder(view);
+        return new CalendarAdapter.ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        MealPojo meal = meals.get(position);
+    public void onBindViewHolder(@NonNull CalendarAdapter.ViewHolder holder, int position) {
+        MealPojoPlan plannedMeal = plannedMeals.get(position);
 
 
-        holder.mealName.setText(meal.getStrMeal());
+        holder.mealName.setText(plannedMeal.getStrMeal());
         Glide.with(context)
-                .load(meal.getStrMealThumb()) // Load image from URL
+                .load(plannedMeal.getStrMealThumb()) // Load image from URL
                 .placeholder(R.drawable.loading) // Placeholder while loading
                 .into(holder.mealImage);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                favOnMealClick.onMealClick(meal);
+                plannedOnClickListener.onPlannedMealClick(plannedMeal);
             }
         });
     }
-
-    @Override
     public int getItemCount() {
-        return meals.size();
+        return plannedMeals.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -79,4 +87,5 @@ public class FavAdapter extends RecyclerView.Adapter<FavAdapter.ViewHolder> {
             cardView = itemView.findViewById(R.id.CardViewID);
         }
     }
+
 }

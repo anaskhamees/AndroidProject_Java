@@ -3,6 +3,7 @@ package com.example.foodplanner.MealDetails.Presenter;
 
 import com.example.foodplanner.MealDetails.View.MealDetailsViewInterface;
 import com.example.foodplanner.Model.MealPojo;
+import com.example.foodplanner.Model.MealPojoPlan;
 import com.example.foodplanner.RandomMealFeature.Presenter.RandomMealPresenterInterface;
 import com.example.foodplanner.Repository.MealRepository;
 import com.example.foodplanner.NetworkPkg.NetworkCallBackInterface;
@@ -25,6 +26,11 @@ public class MealDetailsPresenter implements MealDetailsPresenterInterface, Netw
     public void addMealToFavorites(MealPojo meal)
     {
         mealDetailsRepo.addMealToFav(meal);
+    }
+
+    public void addMealToCalendar(MealPojoPlan plannedMeal)
+    {
+        mealDetailsRepo.insertPlannedMeal(plannedMeal);
     }
 
     @Override

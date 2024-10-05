@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 
 import com.example.foodplanner.DataBase.MealLocalDataBaseInterface;
 import com.example.foodplanner.Model.MealPojo;
+import com.example.foodplanner.Model.MealPojoPlan;
 import com.example.foodplanner.NetworkPkg.NetworkCallBackInterface;
 import com.example.foodplanner.NetworkPkg.MealRemoteDataSource;
 
@@ -13,6 +14,7 @@ public class MealRepository implements RepositoryInterface {
 
     MealRemoteDataSource mealRemoteDataSource;
     MealLocalDataBaseInterface mealLocalDataSource;
+    private String date;
 
     private static MealRepository mealRepo =null;
 
@@ -67,10 +69,32 @@ public class MealRepository implements RepositoryInterface {
         mealRemoteDataSource.makeMealByIngredientNetworkCallBack(networkCallBackInterface,ingredient);
     }
 
+    @Override
+    public LiveData<List<MealPojoPlan>> getPlannedMeals(String date) {
+        return mealLocalDataSource.getPlannedFood(date);
+    }
+
+    @Override
+    public void insertPlannedMeal(MealPojoPlan plannedMeal) {
+        mealLocalDataSource.insertFoodPlan(plannedMeal);
+    }
+
+    @Override
+    public void deletePlannedMeal(MealPojoPlan plannedMeal) {
+        mealLocalDataSource.deleteFoodPlan(plannedMeal);
+    }
+
+    @Override
+    public void updatePlannedMeal(MealPojoPlan plannedMeal) {
+        mealLocalDataSource.updateFoodPlan(plannedMeal);
+
+    }
+
     public void addMealToFav(MealPojo meal)
     {
         mealLocalDataSource.insertMeal(meal);
     }
+
     public void deleteMealFromFav(MealPojo meal)
     {
         mealLocalDataSource.deleteMeal(meal);

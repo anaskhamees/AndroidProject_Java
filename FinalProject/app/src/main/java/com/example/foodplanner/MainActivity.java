@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import com.example.foodplanner.CalendarFeature.View.CalendarFragment;
 import com.example.foodplanner.RandomMealFeature.View.RandomMealFragment;
 import com.example.foodplanner.Home.ListMealCategoriesFragment;
 import com.example.foodplanner.FavoritesFeature.View.FavoritesFragment;
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
                 if (item.getItemId() == R.id.nav_homeID) {
                     selectedFragment = new ListMealCategoriesFragment();
                 } else if (item.getItemId() == R.id.calendarMealID) {
-                    selectedFragment = new RandomMealFragment();
+                    selectedFragment = new CalendarFragment();
                 } else if (item.getItemId() == R.id.nav_search_mealID) {
                     selectedFragment = new SearchFragment();
                     Toast.makeText(MainActivity.this, "Search for Meals", Toast.LENGTH_LONG).show();

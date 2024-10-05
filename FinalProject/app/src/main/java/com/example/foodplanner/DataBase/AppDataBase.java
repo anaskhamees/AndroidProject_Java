@@ -7,8 +7,9 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 import com.example.foodplanner.Model.MealPojo;
+import com.example.foodplanner.Model.MealPojoPlan;
 
-@Database(entities = {MealPojo.class},version = 2)
+@Database(entities = {MealPojo.class, MealPojoPlan.class},version = 2)
 public abstract class AppDataBase extends RoomDatabase{
     private static AppDataBase instance=null;
     public abstract MealDAO getMealDAO();
