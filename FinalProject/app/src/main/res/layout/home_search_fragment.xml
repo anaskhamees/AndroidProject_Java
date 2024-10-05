@@ -14,24 +14,6 @@
         android:background="#ECEFF1">
 
         <!-- Title: Search By -->
-        <TextView
-            android:id="@+id/titleText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Search By"
-            android:textColor="#009688"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            android:fontFamily="sans-serif-medium"
-            android:layout_gravity="center"
-            android:layout_marginBottom="24dp"
-            android:gravity="center"
-            android:letterSpacing="0.1"
-            android:shadowColor="#4D000000"
-            android:shadowRadius="2"
-            android:shadowDx="2"
-            android:shadowDy="2"
-            android:padding="8dp" />
 
         <!-- Card 1: Random meal -->
         <androidx.cardview.widget.CardView

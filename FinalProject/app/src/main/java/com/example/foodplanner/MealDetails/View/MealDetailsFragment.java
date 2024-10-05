@@ -40,6 +40,7 @@ public class MealDetailsFragment extends Fragment implements MealDetailsViewInte
     private MealDetailsPresenter mealDetailsPresenter;
     private TextView mealNameTextView;
     private TextView mealInstructionsTextView;
+    private TextView cuisineNameTextView;
     private ImageView mealImageView;
     private WebView videoWebView;
     private Button addToFavoritesButton; // Add this for favorite button
@@ -61,6 +62,7 @@ public class MealDetailsFragment extends Fragment implements MealDetailsViewInte
 
         // Initialize UI components
         mealNameTextView = view.findViewById(R.id.mealNameTextView);
+        cuisineNameTextView=view.findViewById(R.id.cuisineNameTextView);
         mealInstructionsTextView = view.findViewById(R.id.mealInstructionsTextView);
         mealImageView = view.findViewById(R.id.mealImageView);
         videoWebView = view.findViewById(R.id.mealVideoWebView);
@@ -121,6 +123,7 @@ public class MealDetailsFragment extends Fragment implements MealDetailsViewInte
              meal = mealList.get(0);
 
             mealNameTextView.setText(meal.strMeal);
+            cuisineNameTextView.setText(meal.strArea);
             mealInstructionsTextView.setText(meal.strInstructions);
             Glide.with(requireContext()).load(meal.strMealThumb).into(mealImageView);
 

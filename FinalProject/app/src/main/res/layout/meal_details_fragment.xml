@@ -30,6 +30,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:layout_marginBottom="10dp"
                 android:text="Meal Name"
                 android:textAlignment="center"
                 android:textSize="22sp"
@@ -40,11 +41,9 @@
             <!-- CardView with rounded image -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/mealCardView"
-                android:layout_width="350dp"
+                android:layout_width="match_parent"
                 android:layout_height="232dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="16dp"
-                app:cardCornerRadius="16dp"
+                app:cardCornerRadius="25dp"
                 app:cardElevation="10dp">
 
                 <!-- ShapeableImageView for rounded corners -->
@@ -57,34 +56,66 @@
                     app:shapeAppearanceOverlay="@style/RoundedImageStyle" />
             </androidx.cardview.widget.CardView>
 
-            <TextView
-                android:id="@+id/IngredientsHeaher"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:orientation="horizontal"
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="8dp"
-                android:fontFamily="sans-serif"
-                android:text="Meal Ingredients"
+                android:gravity="center_vertical">
+
+                <!-- Cuisine Header TextView -->
+                <TextView
+                    android:id="@+id/CuisineHeaher"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:text="Meal Cuisine : "
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="25dp"
+                    android:textStyle="bold" />
+
+                <!-- Actual Cuisine Name TextView -->
+                <TextView
+                    android:id="@+id/cuisineNameTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:fontFamily="sans-serif"
                 android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="25dp"
-                android:textStyle="bold" />
+                android:textStyle="normal" />
+            </LinearLayout>
+
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/ingridientCardView"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="230dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="16dp"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="10dp">
+                <TextView
+                    android:id="@+id/IngredientsHeaher"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    android:fontFamily="sans-serif"
+                    android:text="Meal Ingredients"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="25dp"
+                    android:textStyle="bold" />
 
             <!-- RecyclerView for displaying ingredients -->
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/ingredientsRecyclerViewID"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="55dp"
                 android:orientation="horizontal"
                 android:paddingBottom="16dp"
                 tools:listitem="@layout/item_ingredient" />
